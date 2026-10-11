@@ -1,0 +1,31 @@
+{
+  "name": "Floating Power Button - Luicode",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.14"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
+    },
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "jdkDistro": "tem"
+    }
+  },
+  "forwardPorts": [8082],
+  "portsAttributes": {
+    "8082": {
+      "label": "Luicode Admin",
+      "onAutoForward": "notify"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  },
+  "remoteUser": "vscode"
+}
