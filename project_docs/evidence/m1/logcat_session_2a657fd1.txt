@@ -1,0 +1,30 @@
+﻿# Ramus logcat - session 2a657fd1-51f8-4777-9ed0-4ea4d6f4abf9
+#[App APK] app-x86_64-release.apk
+#[NOTE] Ramus logcat scrollback only returned system buffers.
+#[NOTE] No log lines from com.example.floating_power_button / OverlayService /
+#        OverlayController / FloatingButtonView appeared in the scrollback.
+#        App-side Log.d/Log.w calls had already rotated out of the buffer.
+#        => app logcat evidence = NOT CAPTURED (limitation, not a pass).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

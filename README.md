@@ -1,1 +1,383 @@
-# floating-power-button
+# floating_power_button
+
+A new Flutter project.
+
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
+- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
+
+# Floating Power Button
+
+## 1. Project Overview
+
+Build an Android application using Flutter that provides a small floating button for quick access to two functions:
+
+1. **Lock Screen:** Lock the device screen.
+2. **Control Volume:** Open the native Android system volume interface.
+
+The application must be simple, lightweight, stable, and easy to use. It does not require user accounts, a dedicated backend, or data synchronization.
+
+- **Project directory:** `D:\floating_power_button`
+- **Target platform:** Android
+- **Development framework:** Flutter
+- **External testing tool:** Ramus. Ramus is a testing tool, not part of the application.
+
+This document defines the authoritative functional scope and acceptance criteria. Do not add features outside this scope without the user's approval.
+
+## 2. Floating Button
+
+### 2.1. Display and Interaction
+
+- Display a floating button over other applications using an appropriate Android mechanism.
+- Ask the user to grant the required overlay permission through Android Settings.
+- Allow the user to drag the floating button to a preferred position.
+- Save and restore the button's position when the floating service is restarted.
+- Keep the button within valid screen boundaries when the screen size, orientation, or available display area changes.
+- Allow the user to enable or disable the floating button in Settings.
+- Do not unlock the screen or perform actions without an explicit user interaction.
+
+### 2.2. The Only Two Functions
+
+**Lock Screen**
+
+- Invoke the Android system action to lock the device screen.
+- Execute only when the user explicitly selects this function.
+- This function locks the screen; it does not completely power off the device.
+
+**Control Volume**
+
+- Open the native Android system volume interface.
+- Do not implement a custom volume interface.
+- Do not add separate volume-up, volume-down, or third-function buttons.
+
+### 2.3. Function Selection
+
+Settings must allow the user to choose:
+
+- Lock Screen only.
+- Control Volume only.
+- Both functions.
+
+The floating button must display only the functions enabled by the user. When only one function is enabled, interacting with the floating button must provide a clear and consistent way to invoke that function.
+
+Do not introduce additional buttons or behaviors outside this specification.
+
+## 3. Android Permissions and Integration
+
+### 3.1. Display Over Other Applications
+
+Use an appropriate Android overlay mechanism.
+
+- Explain why the permission is required.
+- Guide the user to grant the permission through Android Settings.
+- Check permission status before starting or restoring the floating button.
+- If permission is revoked, stop or hide the floating button safely and explain how to enable it again.
+- Do not assume that previously granted permissions remain available indefinitely.
+
+### 3.2. Lock Screen
+
+Use Android `AccessibilityService` with the following system action:
+
+`AccessibilityService.GLOBAL_ACTION_LOCK_SCREEN`
+
+Implementation requirements:
+
+- Check the Android versions that support this action. The lock-screen global action requires Android API level 28 or later.
+- Set an appropriate `minSdk` based on all selected functionality and verify compatibility before release.
+- Declare the AccessibilityService correctly.
+- Clearly explain why the application requires Accessibility access.
+- Provide the required disclosures and obtain user consent in accordance with current Google Play policies.
+- Guide the user to enable the service manually in Android Settings.
+- Invoke the lock-screen action only after the user explicitly selects Lock Screen.
+- If the service is disabled or unavailable, explain the problem and guide the user to enable it. Never falsely report that the screen has been locked.
+- Do not use Accessibility access to perform unrelated or undocumented actions.
+
+The application must comply with Google Play policies applicable to non-accessibility applications that use AccessibilityService. Technical implementation alone does not guarantee Google Play approval.
+
+### 3.3. Control Volume
+
+Use the native Android audio APIs to request the system volume interface.
+
+- Prefer a native solution such as `AudioManager` with `FLAG_SHOW_UI` and `ADJUST_SAME`, if appropriate.
+- Do not intentionally change the volume when the user only wants to open the interface.
+- Do not build a replacement volume interface.
+- Test on physical Android devices and supported Android versions.
+- If a device does not support the expected behavior, handle the limitation safely and document the actual result.
+
+### 3.4. Service Lifecycle
+
+- Do not assume that the overlay or AccessibilityService will always remain active after the application closes.
+- Handle cases where the user disables the floating button, revokes permissions, stops the service, or restarts the device.
+- Restore services only when permitted by Android and consistent with the user's saved preferences.
+- Never automatically restore permissions that the user has revoked.
+- Do not request permissions that are unnecessary for the specified functionality.
+
+## 4. Free Trial
+
+### 4.1. Trial Duration
+
+- Each trial period lasts **24 hours from the successful activation time**.
+- The trial is not based on calendar days.
+- The first trial begins when the user explicitly activates it for the first time.
+- When the trial expires, free-trial functionality is locked until the user reactivates it.
+- The user can enter Settings and reactivate the trial for free an unlimited number of times.
+- Each successful reactivation creates a new 24-hour trial period beginning at the activation time.
+- Trial periods do not accumulate or stack.
+- The application must not reactivate the trial automatically.
+
+### 4.2. Behavior After Expiration
+
+When the trial expires:
+
+- Floating-button functions available through the free trial must not execute until the trial is reactivated or Pro access is verified.
+- The user must still be able to open the application and access Settings.
+- Settings must provide a clear way to reactivate the trial.
+- Reactivation must require an explicit user action.
+- Successful ad delivery or ad interaction must not be required for trial reactivation.
+
+If an ad cannot load or AdMob does not serve an ad, the user must still be able to reactivate the trial.
+
+### 4.3. Persistence
+
+Persist the trial state and expiration timestamp across application restarts and device reboots.
+
+- Use time-based expiration to determine whether the trial is valid.
+- Handle missing, invalid, or corrupted stored data safely.
+- Do not treat reopening the application as a new activation.
+- Do not allow a simple device-clock change to automatically extend the trial.
+- Because this application has no backend, do not claim absolute protection against time manipulation on a compromised device.
+- Do not introduce a server solely to solve this limitation.
+
+### 4.4. Required Trial States
+
+At minimum, test:
+
+1. Trial not yet activated.
+2. Trial active.
+3. Trial expired.
+4. Trial reactivated.
+5. Device restarted while the trial is active.
+6. Device restarted after the trial expires.
+7. Pro ownership successfully verified.
+
+## 5. AdMob Advertising
+
+### 5.1. Ad Placement
+
+The planned ad placement is an interstitial ad when the user intentionally opens Settings.
+
+- Never display ads on the floating button.
+- Never display ads over other applications.
+- Never display ads when the user selects Lock Screen or Control Volume.
+- Never block access to Settings with an ad.
+- Never require successful ad viewing or interaction to reactivate the trial.
+- Display ads only when consistent with Google Play and AdMob policies.
+
+Ads must appear at an appropriate transition point and must not unexpectedly interrupt an ongoing action.
+
+### 5.2. Application Responsibilities
+
+The application must:
+
+1. Integrate the Google Mobile Ads SDK.
+2. Load interstitial ads through the SDK.
+3. Request ad display at the appropriate Settings-entry point.
+4. Check that an ad is ready before attempting to show it.
+5. Handle ads that fail to load, are unavailable, fail to display, or encounter SDK errors.
+6. Open Settings normally when an ad is unavailable.
+7. Not implement its own daily ad counter or separate frequency-capping system.
+8. Prevent unintended repeated ad requests when Settings rebuilds, the app returns to the foreground, or the device configuration changes.
+
+Requesting an ad does not guarantee that an ad will be displayed.
+
+### 5.3. AdMob Configuration Responsibilities
+
+Frequency capping must be configured separately in the AdMob account, not reimplemented in the application.
+
+Planned configuration:
+
+- Ad format: interstitial.
+- Target cap: no more than one impression per user per day.
+- Configure the cap at the app level or ad-unit level, depending on the actual AdMob setup.
+- Verify the configuration after saving and allow time for changes to take effect.
+
+AdMob manages ad delivery subject to the configured cap. The cap does not guarantee that an ad will appear exactly once every day. An ad may not appear when suitable inventory is unavailable or delivery conditions are not met.
+
+The application must still call the SDK at the intended integration point. Do not assume AdMob can open an ad without an application request.
+
+### 5.4. Development and Release
+
+- Use test ads during development.
+- Do not use test ad unit IDs in production releases.
+- Keep ad configuration separate from core application logic.
+- Ad failures must not break Settings or trial activation.
+- Review current advertising policies before release.
+
+## 6. Pro — One-Time Purchase
+
+### 6.1. Benefits
+
+- Pro is a one-time purchase, not a recurring subscription.
+- Pro users do not see ads.
+- Pro users have no trial expiration limit.
+- Pro users can use the application's functions within the scope of the Pro entitlement.
+
+### 6.2. Billing and Verification
+
+Use Google Play Billing to implement the one-time purchase.
+
+- Grant Pro only after the purchase has been verified as valid according to the Google Play purchase state.
+- Handle pending purchases; do not grant Pro merely because the user started the payment flow.
+- Handle errors, canceled purchases, and cases where the user does not own the product.
+- Follow Google Play's purchase-acknowledgment requirements where applicable.
+- Support restoring or querying eligible purchases associated with the user's Google Play account.
+- Do not introduce a separate user-account system or backend without a new requirement.
+
+### 6.3. Pro State Persistence
+
+- A verified Pro state may be cached locally to support faster startup.
+- Do not rely solely on a locally set Boolean flag as proof of Pro ownership.
+- Query and verify purchase information with Google Play using the appropriate Billing workflow.
+- Do not fabricate a successful purchase when verification is unavailable.
+- Do not force users to purchase again when a valid purchase can still be restored.
+
+### 6.4. Pro, Trial, and Ads
+
+When Pro ownership is successfully verified:
+
+- Do not require trial activation or renewal.
+- Do not lock functionality because of trial expiration.
+- Do not request or display ads.
+- Continue to require any necessary Android permissions. Purchasing Pro does not automatically grant overlay or Accessibility permissions.
+
+Debug builds must support development and testing of core functionality without a real purchase. Testing mechanisms must not fabricate successful purchases in production releases.
+
+## 7. Implementation Principles
+
+- Prioritize core functionality before advertising and billing.
+- Do not expand the scope beyond this document without approval.
+- Do not add a third function.
+- Do not add accounts, a backend, synchronization, or a custom ad-frequency counter.
+- Keep the codebase understandable and minimize unnecessary dependencies.
+- Handle permission revocation, service termination, Android lifecycle changes, and SDK errors.
+- Keep trial logic, Pro entitlement, and ad integration separate.
+- Billing or AdMob failures must not break core functionality.
+- Do not claim that a feature is complete merely because the project builds successfully.
+- Do not include secrets or private keys in source code.
+
+### 7.1. Suggested Implementation Order
+
+1. Floating button, dragging, and position persistence.
+2. Selection of the two functions.
+3. Lock Screen and Control Volume integration.
+4. Permission handling and service lifecycle.
+5. Free Trial and persistent state.
+6. AdMob integration.
+7. Google Play Billing for Pro.
+8. Integration testing, Android build, and physical-device verification.
+
+Do not allow advertising or billing integration to delay verification of the core Android functionality.
+
+## 8. Testing and Acceptance Criteria
+
+### 8.1. Floating Button
+
+- The floating button appears after the required permission is granted.
+- It can be dragged and its position is restored.
+- Its position remains valid after display orientation or size changes.
+- Only selected functions are displayed.
+- The user can disable the floating button in Settings.
+- Revoking overlay permission is handled correctly.
+- No ads appear on the floating button or over other applications.
+
+### 8.2. Lock Screen and Control Volume
+
+- Lock Screen works when AccessibilityService is enabled by the user and supported by Android.
+- The screen locks only after an explicit user action.
+- If the required permission or service is unavailable, the app reports the problem without falsely reporting success.
+- Control Volume requests the native system volume interface.
+- The app does not intentionally change the volume merely to open the interface.
+- Test on physical devices or an appropriate Android environment.
+
+### 8.3. Free Trial
+
+- The first activation starts a 24-hour period.
+- The expiration time is unaffected by closing and reopening the app.
+- Free-trial functions are locked after expiration.
+- Settings remains accessible after expiration.
+- The user can reactivate the trial for free an unlimited number of times.
+- Each successful reactivation creates a new 24-hour period.
+- Successful ad viewing is not required for reactivation.
+- Trial state persists across device restarts.
+- Device-clock manipulation and invalid stored data are tested.
+
+### 8.4. Pro
+
+- A valid purchase enables Pro.
+- A pending purchase does not enable Pro.
+- A canceled or failed purchase does not grant Pro.
+- An eligible purchase can be restored through the Google Play account.
+- Pro removes the trial limit and advertising.
+- Pro does not automatically grant missing Android permissions.
+- Billing failures do not crash the application or disable unrelated core functionality.
+
+### 8.5. AdMob
+
+- Ads are requested only at the intended Settings-entry point.
+- No ads appear when the user selects functions on the floating button.
+- Settings opens when ads fail to load or are unavailable.
+- No custom frequency-capping counter exists in the app.
+- Frequency capping is configured separately in AdMob.
+- Test ads are used during development.
+- Ad dismissal, unavailable ads, and loading failures are tested.
+- Unintended repeated display when the app moves between foreground and background is prevented.
+- Advertising-policy compliance is reviewed before release.
+
+### 8.6. Integration Testing
+
+Test at least the following combinations:
+
+- Active Free Trial, overlay permission not granted.
+- Active Free Trial, overlay permission granted, AccessibilityService not enabled.
+- Active Free Trial with all required permissions enabled.
+- Expired Free Trial followed by reactivation through Settings.
+- Verified Pro with required Android permissions granted.
+- Verified Pro with an Android permission subsequently revoked.
+- No network connection or unavailable ad SDK.
+- Device restart with persisted trial, permission, and purchase states.
+
+### 8.7. Handover
+
+- Run static analysis and relevant automated tests.
+- Successfully build an Android APK.
+- Report test results, known defects, and required manual checks.
+- Clearly distinguish verified functionality from functionality that has only been compiled.
+- Identify any remaining AdMob or Google Play account configuration needed before release.
+- Verify Accessibility, overlay, volume, ads, and Billing behavior on an appropriate device or test environment.
+- Use Ramus only as an external testing tool; do not include it in the application.
+
+## 9. Definition of Done
+
+The application is considered complete only when:
+
+1. The floating button works reliably and remembers its position.
+2. Both functions behave according to the user's selections.
+3. Android permissions are requested, explained, and handled correctly.
+4. The Free Trial follows the 24-hour rule and can be reactivated for free.
+5. Pro is granted based on a valid Google Play purchase, removes the trial limit, and disables ads.
+6. AdMob is integrated at the intended point, never blocks Settings, and uses frequency capping configured separately in AdMob.
+7. Permission revocation, service termination, and SDK failures are handled safely.
+8. Relevant tests have been run and the Android APK builds successfully.
+9. Applicable Google Play policy requirements have been reviewed before release.
+
+Do not declare the application ready for Google Play release based solely on source-code completion or a successful build.

@@ -1,0 +1,148 @@
+# Ramus CLI — Instructions for AI Agents
+
+## 1. Purpose and Scope
+
+Ramus is an external tool used to test and verify the application. It is not part of the Flutter application and must not be added as an application dependency.
+
+Project directory:
+
+`D:\floating_power_button`
+
+Use Ramus to collect runtime evidence and verify actual application behavior. Do not claim that a feature works merely because the source code looks correct or the APK builds successfully.
+
+## 2. Discover the Installed CLI Before Using It
+
+Run Ramus through the terminal using:
+
+```powershell
+npx ramus-cli@0.1.13 --help
+```
+
+If the command does not expose help, inspect the CLI's documented commands and options using its supported help mechanism.
+
+Do not assume command names, arguments, configuration formats, or output locations that have not been verified.
+
+If Ramus is already available locally, prefer the installed version when it is confirmed to be version `0.1.13`. Avoid unnecessary installations or upgrades.
+
+Before testing, determine:
+
+- Which Ramus commands are available.
+- Whether a connected Android device or emulator is supported.
+- How to start, execute, and stop a test session.
+- How screenshots, logs, and other evidence are captured.
+- Where test results are stored.
+- Whether the current environment has the required Android tools and device access.
+
+If a required capability is unavailable, report the limitation instead of inventing a workaround or claiming the test passed.
+
+## 3. Testing Workflow
+
+Follow this sequence:
+
+1. **Inspect:** Read the project's implementation and identify the behavior that must be tested.
+2. **Check the environment:** Verify Flutter, Android tooling, the target device, and Ramus availability.
+3. **Build:** Build the appropriate debug APK or test artifact.
+4. **Launch:** Install and launch the app on the supported target device.
+5. **Execute:** Use Ramus's verified capabilities to perform the relevant runtime tests.
+6. **Capture evidence:** Save available screenshots, logs, and test results.
+7. **Verify:** Compare observed behavior against the acceptance criteria.
+8. **Report:** Separate passed, failed, blocked, and untested cases.
+
+Do not modify production code just to make a test pass. If a defect is found, identify the cause, implement the smallest justified fix, and rerun the affected tests.
+
+## 4. Application-Specific Test Coverage
+
+Use Ramus where its supported capabilities allow. Some Android system interactions may require manual testing or other verified Android tools.
+
+### Floating button
+
+- The floating button appears above other applications after the necessary permissions are granted.
+- The button can be dragged.
+- Its position is preserved according to the app's requirements.
+- Only enabled functions are displayed.
+- The overlay does not display advertisements.
+
+### Lock Screen
+
+- Test with the required Accessibility service disabled.
+- Verify that the app explains the permission requirement.
+- Enable the service manually in Android Settings.
+- Tap Lock Screen and verify that the device locks.
+- Verify that the app does not lock the device automatically.
+- Revoke or disable the permission and verify the resulting behavior.
+
+Do not mark this test as passed based solely on invoking an Android API. Verify the actual device behavior.
+
+### Control Volume
+
+- Tap Control Volume.
+- Verify that the native Android volume interface appears on the target device.
+- Confirm that the app does not substitute a custom volume interface.
+- Record any differences caused by Android version or device manufacturer.
+
+### Trial
+
+- Activate the trial and verify its stored expiration time.
+- Restart the app and verify that the trial state persists.
+- Verify expiration and explicit reactivation.
+- Confirm that reactivation starts a new 24-hour period without stacking time.
+- Do not wait 24 hours during every development test if a safe, supported test mechanism can verify the relevant logic. Clearly distinguish simulated or accelerated tests from real elapsed-time tests.
+
+### Ads
+
+- Verify that entering Settings still works when an ad is unavailable or fails to load.
+- Verify that an advertisement does not appear over the floating button or unexpectedly interrupt core functionality.
+- Use test ad configuration during development.
+- Do not use real production ads for automated testing or repeatedly click ads.
+
+### Pro purchase
+
+- Test purchase-state handling with supported Google Play test infrastructure.
+- Verify pending, canceled, failed, successful, and restorable purchase states where applicable.
+- Do not claim that real billing has been verified if the test environment does not support it.
+- Never fabricate a successful production purchase.
+
+## 5. Evidence and Result Reporting
+
+For each test, report:
+
+- Test case and expected behavior.
+- Actual observed behavior.
+- Result: `PASS`, `FAIL`, `BLOCKED`, or `NOT TESTED`.
+- Evidence location, such as a screenshot, log, or Ramus report, when available.
+- Environment details relevant to reproducing the result.
+- Any limitations that affect confidence in the result.
+
+Use these definitions:
+
+- **PASS:** The required behavior was directly verified.
+- **FAIL:** The observed behavior contradicts the acceptance criteria.
+- **BLOCKED:** The test could not be completed because of an environment, permission, device, or tooling limitation.
+- **NOT TESTED:** No valid verification was performed.
+
+A successful build is not proof of runtime correctness. A command completing without an error is not proof that the intended user interaction worked.
+
+## 6. Safety and Scope Rules
+
+- Do not add Ramus to `pubspec.yaml`, Android runtime dependencies, or the release APK.
+- Do not change app architecture merely to accommodate Ramus.
+- Do not invent unsupported Ramus commands or test results.
+- Do not report emulator results as real-device results.
+- Do not report simulated trial or billing results as real-world verification.
+- Preserve useful test evidence and report its actual location.
+- Keep changes focused on the application's requirements.
+- If Ramus cannot test a specific Android system interaction, use an appropriate verified alternative or clearly mark the test as blocked.
+
+## 7. Final Test Report
+
+At the end of a test run, provide:
+
+1. Ramus CLI version and target environment.
+2. Build result.
+3. Number of tests passed, failed, blocked, and not tested, if measurable.
+4. Failures and their reproduction steps.
+5. Evidence paths.
+6. Tests requiring manual verification on a physical Android device.
+7. A clear distinction between confirmed behavior and unverified assumptions.
+
+Never claim that the application is fully verified when important acceptance tests remain untested.
