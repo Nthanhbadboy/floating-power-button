@@ -53,11 +53,26 @@ jobs:
         run: flutter pub get
 
       - name: Analyze (không chặn build)
-        run: flutter analyze --no-fatal-warnings --no-fatal-infos
+        run: |
+          flutter analyze --no-fatal-warnings --no-fatal-infos 2>&1 | tee analyze.log || true
+          grep -E "error •|Error:" analyze.log | head -n 40 > analyze-errors.txt || true
+          if [ -s analyze-errors.txt ]; then
+            ESC=$(perl -pe 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g' analyze-errors.txt)
+            echo "::error title=AnalyzeLog::$ESC"
+          fi
         continue-on-error: true
 
       - name: Widget tests
-        run: flutter test
+        run: |
+          set +e
+          flutter test 2>&1 | tee test.log
+          CODE=${PIPESTATUS[0]}
+          if [ "$CODE" != "0" ]; then
+            grep -E "Error:|error:|Failed to load|failed|Exception|Expected|Actual" test.log | head -n 60 > test-errors.txt || true
+            ESC=$(perl -pe 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g' test-errors.txt)
+            echo "::error title=TestLog::$ESC"
+          fi
+          exit $CODE
 
       - name: Build DEBUG APK (cài để test nhanh)
         run: |
