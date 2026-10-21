@@ -37,26 +37,17 @@ jobs:
           cache: true
 
       # Repo chưa commit gradle-wrapper.jar (file nhị phân do tool sinh ra).
-      # Sinh wrapper ngay trong CI, không đụng vào mã nguồn.
-      - name: Setup Gradle (to generate the wrapper)
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: "8.4"
-
-      - name: Generate Gradle wrapper if missing
-        # Sinh wrapper trong thư mục trống: chạy trong android/ sẽ lỗi vì
-        # settings.gradle.kts đọc local.properties (chưa tồn tại lúc này).
+      # Tải thẳng gradlew + wrapper jar 8.4 từ repo Gradle trên GitHub.
+      - name: Fetch Gradle wrapper files if missing
         run: |
           if [ ! -f android/gradle/wrapper/gradle-wrapper.jar ]; then
-            TMPD="$(mktemp -d)"
-            (cd "$TMPD" && gradle wrapper --gradle-version 8.4 --distribution-type all)
-            mkdir -p android/gradle/wrapper
-            cp "$TMPD/gradle/wrapper/gradle-wrapper.jar" android/gradle/wrapper/
-            cp "$TMPD/gradle/wrapper/gradle-wrapper.properties" android/gradle/wrapper/
-            cp "$TMPD/gradlew" "$TMPD/gradlew.bat" android/
+            BASE="https://raw.githubusercontent.com/gradle/gradle/v8.4.0"
+            curl -fL "$BASE/gradle/wrapper/gradle-wrapper.jar" -o android/gradle/wrapper/gradle-wrapper.jar
+            curl -fL "$BASE/gradlew" -o android/gradlew
+            curl -fL "$BASE/gradlew.bat" -o android/gradlew.bat
             chmod +x android/gradlew
           fi
-          ls -la android/gradle/wrapper/
+          ls -la android/gradle/wrapper/ android/gradlew
 
       - name: Flutter pub get
         run: flutter pub get
