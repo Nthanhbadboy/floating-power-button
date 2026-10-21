@@ -13,6 +13,7 @@ thư mục `/docs` này là nơi lưu nội dung chuẩn để đồng bộ lên
 |---|---|
 | [APPGALLERY_FIXES_2.0.1.md](APPGALLERY_FIXES_2.0.1.md) | Chi tiết cách sửa 4 lỗi + checklist trước khi nộp |
 | [REVIEWER_NOTES_2.0.1.md](REVIEWER_NOTES_2.0.1.md) | Nội dung tiếng Anh để dán vào ô "Notes for review" trên AppGallery Connect |
+| [CAI_DAT_BAN_TEST.md](CAI_DAT_BAN_TEST.md) | Tải APK test từ GitHub Actions về cài trực tiếp, không cần Flutter |
 | [HUONG_DAN_NOP_APPGALLERY.md](HUONG_DAN_NOP_APPGALLERY.md) | Hướng dẫn từng bước bằng tiếng Việt: URL Vercel, điền Privacy Policy URL, chọn vùng phát hành, nộp bản 2.0.1 |
 
 ## 2. Privacy Policy (3 ngôn ngữ)

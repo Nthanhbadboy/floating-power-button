@@ -1,0 +1,83 @@
+name: Build test APK (installable)
+
+# Chạy tay bằng nút "Run workflow" trên tab Actions, và tự chạy khi push.
+# Kết quả: file .apk trong mục Artifacts của lần chạy -> tải về, giải nén, cài.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "arena/aa4d9a51-floating-power-button"
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-apk:
+    name: Flutter test + build APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.5"
+          channel: stable
+          cache: true
+
+      # Repo chưa commit gradle-wrapper.jar (file nhị phân do tool sinh ra).
+      # Sinh wrapper ngay trong CI, không đụng vào mã nguồn.
+      - name: Setup Gradle (to generate the wrapper)
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.4"
+
+      - name: Generate Gradle wrapper if missing
+        working-directory: android
+        run: |
+          if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
+            gradle wrapper --gradle-version 8.4 --distribution-type all
+          fi
+          ls -la gradle/wrapper/
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Analyze (không chặn build)
+        run: flutter analyze --no-fatal-warnings --no-fatal-infos
+        continue-on-error: true
+
+      - name: Widget tests
+        run: flutter test
+
+      - name: Build DEBUG APK (cài để test nhanh)
+        run: flutter build apk --debug
+
+      - name: Build RELEASE APK (bản test, ký bằng debug key)
+        run: flutter build apk --release
+
+      - name: Collect APKs
+        run: |
+          mkdir -p dist
+          cp build/app/outputs/flutter-apk/app-debug.apk   dist/PowerVolume-v2.0.1-DEBUG.apk
+          cp build/app/outputs/flutter-apk/app-release.apk dist/PowerVolume-v2.0.1-RELEASE-TEST.apk
+          ls -lh dist/
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PowerVolume-v2.0.1-apk
+          path: dist/*.apk
+          if-no-files-found: error
+          retention-days: 14

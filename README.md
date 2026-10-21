@@ -19,8 +19,9 @@ Floating / notification controls to **lock the screen instantly (0ms)** and
 
 📚 **All documentation lives in [`docs/`](docs/README.md)** — AppGallery fix
 details, the 3-language Privacy Policy, the Vietnamese submission guide
-([`docs/HUONG_DAN_NOP_APPGALLERY.md`](docs/HUONG_DAN_NOP_APPGALLERY.md)) and
-reference screenshots ([`docs/screenshots/`](docs/screenshots/)).
+([`docs/HUONG_DAN_NOP_APPGALLERY.md`](docs/HUONG_DAN_NOP_APPGALLERY.md)),
+the test-APK install guide ([`docs/CAI_DAT_BAN_TEST.md`](docs/CAI_DAT_BAN_TEST.md))
+and reference screenshots ([`docs/screenshots/`](docs/screenshots/)).
 
 Plus the **Device-Specific Background Guide** for Huawei/Honor,
 Xiaomi/Redmi/POCO, Samsung, OPPO/Realme and Vivo/iQOO (auto-detected,
