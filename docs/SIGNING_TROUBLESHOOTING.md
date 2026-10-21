@@ -76,3 +76,35 @@ Các hướng xử lý phải làm với chính chủ tài khoản/developer sup
 (AppGallery Connect → Help/Feedback hoặc developer support), hỏi thủ tục khôi phục/
 thay đổi signing key cho đúng app `com.floatingbutton.app`. Sao lưu keystore gốc và
 hai mật khẩu ở nơi an toàn ngay khi tìm lại được.
+
+## Trường hợp thực tế của app này: bản 19/10 không tạo/lưu key thật
+
+APK nào cũng có một chứng thư ký — bản 19/10 có thể đã được ký bằng key tạm,
+debug key, hoặc key do công cụ build tự tạo nhưng không được bàn giao/lưu lại.
+Từ fingerprint công khai **không thể** tạo lại private key đó.
+
+Không cần tiếp tục tìm "key gốc" nếu key đó chưa từng được tạo và lưu giữ.
+Có hai tình huống trong AppGallery Connect:
+
+1. **Bản 19/10 chỉ là bản nháp/chưa từng Full release:**
+   Xoá package/version nháp cũ trong AppGallery Connect (nếu giao diện cho phép),
+   tạo version mới và tải APK release hiện tại lên. Keystore đang cấu hình trong
+   GitHub Secrets từ nay là **key chính thức** — phải sao lưu file `.jks`,
+   store password, key alias và key password; mọi bản sau bắt buộc dùng key này.
+
+2. **Hệ thống hiện hộp thoại "signature inconsistency" khi chọn package:**
+   Với app thường (không phải game), Huawei cho chọn phương án
+   **"need to change the app signature"** (tuỳ chọn thứ hai), nhập lý do,
+   tick **Disclaimer** rồi **Submit**. Lý do có thể ghi:
+
+   > The package uploaded on 19 October was signed with a temporary key and
+   > no production keystore was retained. Please approve changing to the
+   > retained production signing key used from version 2.0.1 onward.
+
+   Chỉ chọn phương án đổi signature khi chấp nhận hệ quả trong Disclaimer
+   (đặc biệt nếu bản cũ đã có người dùng cài đặt thật). Nếu app chưa phát
+   hành công khai, đây là hướng xử lý phù hợp nhất.
+
+Trong cả hai trường hợp, chỉ tải file
+`PowerVolume-v2.0.1-com.floatingbutton.app-APPGALLERY-SIGNED.apk`
+lên AppGallery; **không tải AAB**.
