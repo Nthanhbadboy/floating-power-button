@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accessibility_service_label">Power &amp; Volume</string>
+    <string name="accessibility_service_description">Locks your screen instantly and shows the volume panel when you tap the Power &amp; Volume buttons. It does not read your screen content or anything you type.</string>
+    <string name="device_admin_label">Power &amp; Volume</string>
+    <string name="device_admin_description">Optional fallback to lock the screen and prevent the system from closing Power &amp; Volume. It never wipes data or changes your password.</string>
+</resources>
