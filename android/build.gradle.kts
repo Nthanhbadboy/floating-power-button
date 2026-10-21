@@ -5,11 +5,13 @@ allprojects {
     }
 }
 
-val newBuildDir: java.io.File = rootProject.layout.buildDirectory.dir("../../build").get().asFile
+// Pass Directory (not File) to value(): Gradle 8.4's DirectoryProperty
+// has no value(File) overload.
+val newBuildDir = rootProject.layout.buildDirectory.dir("../../build").get()
 rootProject.layout.buildDirectory.value(newBuildDir)
 
 subprojects {
-    val newSubprojectBuildDir: java.io.File = newBuildDir.resolve(project.name)
+    val newSubprojectBuildDir = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
 subprojects {
