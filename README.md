@@ -17,6 +17,11 @@ Floating / notification controls to **lock the screen instantly (0ms)** and
 | 3 | App/Developer name missing in Privacy Policy | Exact `Power & Volume - Lock Screen & Sound Control` / `NGUYEN MINH THANH` single-sourced from `lib/constants/app_info.dart` |
 | 4 | Foreground Service started without consent | Switch **OFF by default**, explanation dialog + explicit **Enable** before `startForegroundService()`; no launch/boot auto-start |
 
+📚 **All documentation lives in [`docs/`](docs/README.md)** — AppGallery fix
+details, the 3-language Privacy Policy, the Vietnamese submission guide
+([`docs/HUONG_DAN_NOP_APPGALLERY.md`](docs/HUONG_DAN_NOP_APPGALLERY.md)) and
+reference screenshots ([`docs/screenshots/`](docs/screenshots/)).
+
 Plus the **Device-Specific Background Guide** for Huawei/Honor,
 Xiaomi/Redmi/POCO, Samsung, OPPO/Realme and Vivo/iQOO (auto-detected,
 "Your Device" badge). Full details & submission checklist:
