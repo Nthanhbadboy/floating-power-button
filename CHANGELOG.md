@@ -1,5 +1,14 @@
 # Changelog
 
+## Signing correction for AppGallery re-upload
+- Split release outputs so AppGallery receives only the clearly named,
+  signed **APK** (`...-APPGALLERY-SIGNED.apk`); the AAB is a separate
+  Google Play artifact and must not be uploaded to AppGallery.
+- Release artifacts now include `CERTIFICATE.txt` so the Signer #1 SHA-256
+  fingerprint can be compared with the previously accepted APK before
+  uploading. A mismatch means the original signing key must replace the
+  current GitHub Secrets (see `docs/SIGNING_TROUBLESHOOTING.md`).
+
 ## 2.0.1 package-name correction
 - Changed Android `applicationId` and `namespace` from
   `com.nguyenminhthanh.power_volume` to the existing AppGallery package

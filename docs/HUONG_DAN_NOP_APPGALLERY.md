@@ -53,7 +53,7 @@ variables → Actions) — keystore/mật khẩu **không bao giờ commit**:
 |---|---|
 | `ANDROID_KEYSTORE_BASE64` | File `.jks` mã hoá base64 (`base64 -w0 physics-draw-release.jks`) |
 | `ANDROID_KEYSTORE_PASSWORD` | Mật khẩu khoá (store password) |
-| `ANDROID_KEY_ALIAS` | `physicsdraw` |
+| `ANDROID_KEY_ALIAS` | Alias trong keystore **gốc đã ký bản APK được AppGallery chấp nhận trước đây** |
 | `ANDROID_KEY_PASSWORD` | Mật khẩu riêng của key (key password) |
 
 Cách build:
@@ -62,10 +62,14 @@ Cách build:
    (hoặc push tag `v*`). Workflow tự giải mã keystore tạm trên máy CI,
    tạo `android/key.properties` tạm, build và **kiểm tra chứng thư không
    phải Android Debug** rồi xoá key.
-2. Tải artifact **`PowerVolume-v2.0.1-RELEASE-signed`** (giữ 30 ngày)
-   gồm: `PowerVolume-v2.0.1-RELEASE.aab` (nộp AppGallery),
-   `PowerVolume-v2.0.1-RELEASE.apk` (cài kiểm tra), `SHA256SUMS.txt`.
-3. Nộp file **.aab** lên AppGallery Connect.
+2. Tải artifact **`PowerVolume-v2.0.1-APPGALLERY-SIGNED-APK`** (giữ 30 ngày).
+   File tải lên AppGallery là
+   `PowerVolume-v2.0.1-com.floatingbutton.app-APPGALLERY-SIGNED.apk`.
+   Artifact AAB riêng chỉ dùng cho Google Play — **không nộp AAB lên AppGallery**.
+3. Trước khi nộp, mở `CERTIFICATE.txt`: dòng **Signer #1 SHA-256 digest**
+   phải giống hệt chứng thư của APK cũ đã được AppGallery chấp nhận.
+   Khác nhau nghĩa là đang dùng sai keystore; xem
+   [`SIGNING_TROUBLESHOOTING.md`](SIGNING_TROUBLESHOOTING.md).
 
 > ⚠️ Từ các bản sau, **bắt buộc dùng đúng key này** để ký thì AppGallery
 > mới cho cập nhật đè lên bản đã phát hành. Mất keystore/mật khẩu sẽ phải
@@ -77,7 +81,7 @@ Build thủ công ở máy (nếu cần):
 ```bash
 flutter pub get && flutter test && flutter analyze
 # Tạo android/key.properties trỏ tới keystore thật (file này đã .gitignore)
-flutter build appbundle --release
+flutter build apk --release
 ```
 
 ## Mục 4 — Tự kiểm tra trên máy Huawei thật (cài mới hoàn toàn)
