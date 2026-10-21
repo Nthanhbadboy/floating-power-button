@@ -5,7 +5,7 @@ import android.view.View
 import com.huawei.hms.ads.AdListener
 import com.huawei.hms.ads.AdParam
 import com.huawei.hms.ads.HwAds
-import com.huawei.hms.ads.banner.BannerAdSize
+import com.huawei.hms.ads.BannerAdSize
 import com.huawei.hms.ads.banner.BannerView
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
