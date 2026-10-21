@@ -155,9 +155,13 @@ nếu nó trở thành chữ ký chính thức của app. Nếu AppGallery khôn
 debug signing cho bản phát hành chính thức, hãy dùng release keystore thật và
 đi theo quy trình xin đổi signature ở phần trước, thay vì tiếp tục dùng debug key.
 
-### Fingerprint của debug key trên PC (bản hiện tại/2.0.0)
+### Xác nhận cuối cùng về APK PC ngày 15/10
 
-Chứng thư debug đã được xác nhận có thông tin:
+Ngày 22/10/2026, APK còn lưu trên PC đã được kiểm tra trực tiếp bằng
+`apksigner verify --print-certs`. Hai bản sao có cùng file hash
+`41CE2FB862E0C42D473C6C32408309139B6774C2A95945F6EC8B494B58962A57`
+nên là cùng một APK. APK này có dung lượng 34,077,905 bytes, được build ngày
+15/10 lúc 10:57, và chứng thư ký của nó là:
 
 ```text
 DN:       C=US, O=Android, CN=Android Debug

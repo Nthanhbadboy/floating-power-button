@@ -1,6 +1,10 @@
 # Changelog
 
 ## Legacy PC debug-signing match
+- The surviving PC `app-release.apk` (built 15 October, 34,077,905 bytes)
+  was directly verified with `apksigner`: its signer is the PC Android
+  Debug certificate with SHA-256
+  `6d982893a5cf58f3c82e8cf3eca793013a49007aff1670ee338484544a996d8c`.
 - The uploaded Power & Volume 2.0.0 package was identified as Android
   debug-signed, with no separate release keystore. The release workflow now
   permits a deliberate debug-certificate build (with a prominent warning)
