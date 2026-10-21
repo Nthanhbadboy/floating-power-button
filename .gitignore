@@ -10,3 +10,7 @@ android/key.properties
 *.jks
 .idea/
 .metadata
+
+# Python tooling
+__pycache__/
+*.pyc
