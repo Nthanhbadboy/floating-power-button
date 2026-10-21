@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark navy background of the power/volume icon (#0F172A sampled
+         from assets/icon/app_icon_114.png). -->
+    <color name="ic_launcher_background">#0F172A</color>
+</resources>

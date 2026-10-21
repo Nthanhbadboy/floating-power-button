@@ -1,0 +1,34 @@
+name: power_volume
+description: "Power & Volume - Lock Screen & Sound Control. Floating/ notification controls to lock the screen instantly and show the system volume panel."
+publish_to: "none"
+
+# AppGallery build 2.0.1 — includes the 4 review fixes:
+# 1) First-launch Privacy Policy consent pop-up
+# 2) Simplified Chinese Privacy Policy
+# 3) Exact App Name / Developer Name in the Privacy Policy
+# 4) Foreground Service OFF by default, explicit consent before start
+version: 2.0.1+201
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Persists `is_privacy_accepted`, keep-alive consent and language choice.
+  shared_preferences: ^2.3.2
+  # Opens the online Privacy Policy / mailto: support link.
+  url_launcher: ^6.3.0
+  # Google AdMob banner (fallback when Huawei Petal Ads is unavailable).
+  google_mobile_ads: ^5.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icon/app_icon_114.png

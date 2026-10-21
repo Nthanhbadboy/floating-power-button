@@ -1,0 +1,111 @@
+name: Build test APK (installable)
+
+# Chạy tay bằng nút "Run workflow" trên tab Actions, và tự chạy khi push.
+# Kết quả: file .apk trong mục Artifacts của lần chạy -> tải về, giải nén, cài.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "arena/aa4d9a51-floating-power-button"
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-apk:
+    name: Flutter test + build APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.5"
+          channel: stable
+          cache: true
+
+      # Repo chưa commit gradle-wrapper.jar (file nhị phân do tool sinh ra).
+      # Tải thẳng gradlew + wrapper jar 8.4 từ repo Gradle trên GitHub.
+      - name: Fetch Gradle wrapper files if missing
+        run: |
+          if [ ! -f android/gradle/wrapper/gradle-wrapper.jar ]; then
+            BASE="https://raw.githubusercontent.com/gradle/gradle/v8.4.0"
+            curl -fL "$BASE/gradle/wrapper/gradle-wrapper.jar" -o android/gradle/wrapper/gradle-wrapper.jar
+            curl -fL "$BASE/gradlew" -o android/gradlew
+            curl -fL "$BASE/gradlew.bat" -o android/gradlew.bat
+            chmod +x android/gradlew
+          fi
+          ls -la android/gradle/wrapper/ android/gradlew
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Analyze (không chặn build)
+        run: |
+          flutter analyze --no-fatal-warnings --no-fatal-infos 2>&1 | tee analyze.log || true
+          grep -E "error •|Error:" analyze.log | head -n 40 > analyze-errors.txt || true
+          if [ -s analyze-errors.txt ]; then
+            ESC=$(perl -pe 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g' analyze-errors.txt)
+            echo "::error title=AnalyzeLog::$ESC"
+          fi
+        continue-on-error: true
+
+      - name: Widget tests
+        run: |
+          set +e
+          flutter test 2>&1 | tee test.log
+          CODE=${PIPESTATUS[0]}
+          if [ "$CODE" != "0" ]; then
+            grep -E "Error:|error:|Failed to load|failed|Exception|Expected|Actual" test.log | head -n 60 > test-errors.txt || true
+            ESC=$(perl -pe 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g' test-errors.txt)
+            echo "::error title=TestLog::$ESC"
+          fi
+          exit $CODE
+
+      - name: Build DEBUG APK (cài để test nhanh)
+        run: |
+          set +e
+          flutter build apk --debug 2>&1 | tee build-debug.log
+          CODE=${PIPESTATUS[0]}
+          { echo "## flutter build apk --debug (exit $CODE)"; echo '```text'; tail -n 150 build-debug.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$CODE" != "0" ]; then
+            grep -E "FAILURE:|BUILD FAILED|Execution failed|What went wrong|AAPT|error:|e: |Manifest merger|Could not|FAILED" build-debug.log | grep -v "Resource missing" | head -n 60 > build-errors.txt || true
+            ESC=$(perl -pe 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g' build-errors.txt)
+            echo "::error title=BuildDebugLog::$ESC"
+          fi
+          exit $CODE
+
+      - name: Build RELEASE APK (bản test, ký bằng debug key)
+        run: |
+          set +e
+          flutter build apk --release 2>&1 | tee build-release.log
+          CODE=${PIPESTATUS[0]}
+          { echo "## flutter build apk --release (exit $CODE)"; echo '```text'; tail -n 80 build-release.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          exit $CODE
+
+      - name: Collect APKs
+        run: |
+          mkdir -p dist
+          cp build/app/outputs/flutter-apk/app-debug.apk   dist/PowerVolume-v2.0.1-DEBUG.apk
+          cp build/app/outputs/flutter-apk/app-release.apk dist/PowerVolume-v2.0.1-RELEASE-TEST.apk
+          ls -lh dist/
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PowerVolume-v2.0.1-apk
+          path: dist/*.apk
+          if-no-files-found: error
+          retention-days: 14
