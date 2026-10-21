@@ -133,6 +133,17 @@ jobs:
             echo "::warning::APK is signed with the Android Debug certificate. This is only acceptable as a deliberate legacy match for the PC-built 2.0.0 package; verify its SHA-256 against that package before uploading."
           fi
           grep -i "SHA-256" cert.txt || true
+          # Public fingerprint of the legacy PC debug certificate. This is
+          # a comparison warning only: a production build may intentionally
+          # use a different release certificate after AppGallery approves a
+          # signature change.
+          EXPECTED_LEGACY_SHA256="6d982893a5cf58f3c82e8cf3eca793013a49007aff1670ee338484544a996d8c"
+          ACTUAL_SHA256=$(grep -i "SHA-256" cert.txt | head -1 | sed -E 's/.*: //' | tr -d ': ' | tr '[:upper:]' '[:lower:]' || true)
+          echo "Expected legacy PC debug SHA-256: $EXPECTED_LEGACY_SHA256"
+          echo "Actual APK certificate SHA-256: $ACTUAL_SHA256"
+          if [ "$ACTUAL_SHA256" != "$EXPECTED_LEGACY_SHA256" ]; then
+            echo "::warning::Certificate does not match the legacy PC debug build (6d9828...). It will not update that build in place unless AppGallery approves a signature change."
+          fi
           cp cert.txt dist/CERTIFICATE.txt
           (cd dist && sha256sum PowerVolume-v2.0.1-com.floatingbutton.app-GOOGLE-PLAY.aab PowerVolume-v2.0.1-com.floatingbutton.app-APPGALLERY-SIGNED.apk | tee SHA256SUMS.txt)
           ls -lh dist/

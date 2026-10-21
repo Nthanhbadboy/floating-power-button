@@ -154,3 +154,28 @@ AppGallery yêu cầu giữ nguyên signature. Hãy sao lưu file này như rele
 nếu nó trở thành chữ ký chính thức của app. Nếu AppGallery không chấp nhận
 debug signing cho bản phát hành chính thức, hãy dùng release keystore thật và
 đi theo quy trình xin đổi signature ở phần trước, thay vì tiếp tục dùng debug key.
+
+### Fingerprint của debug key trên PC (bản hiện tại/2.0.0)
+
+Chứng thư debug đã được xác nhận có thông tin:
+
+```text
+DN:       C=US, O=Android, CN=Android Debug
+SHA-256:  6d982893a5cf58f3c82e8cf3eca793013a49007aff1670ee338484544a996d8c
+SHA-1:    ba5ea3793838675b8d7f46a7da26a57a91355b88
+Scheme:   APK Signature Scheme v2
+```
+
+SHA-256/SHA-1 ở trên là fingerprint công khai của chứng thư, có thể dùng để
+đối chiếu an toàn; chúng **không** thay thế được private key/keystore.
+
+- Nếu mục tiêu là cập nhật liền mạch đúng bản đã ký bằng debug key này,
+  `CERTIFICATE.txt` của APK mới phải cho SHA-256 **giống hệt**
+  `6d982893a5cf58f3c82e8cf3eca793013a49007aff1670ee338484544a996d8c`.
+- Nếu SHA khác, APK mới đang dùng một debug key khác (ví dụ debug key tự tạo
+  trên GitHub runner/PC khác) hoặc release key khác; đừng tải lên nếu đang
+  cần khớp signature cũ.
+- Nếu mục tiêu là phát hành production lâu dài, không nên tiếp tục dùng
+  debug key. Hãy dùng release keystore thật và xử lý đổi signature với
+  AppGallery theo quy trình ở trên (xoá bản nháp cũ nếu chưa Full release,
+  hoặc chọn phương án đổi signature khi hệ thống hiển thị).
