@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:power_volume/data/manufacturer_guides.dart';
 import 'package:power_volume/data/privacy_policy_content.dart';
