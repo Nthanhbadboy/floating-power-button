@@ -37,8 +37,11 @@ character (including the store short name `Power&volume`).
 ## 🔴 Issue 4 — Foreground Service must be explicitly consented ✅ FIXED
 - `PreferencesService.keepAliveEnabled` defaults to **false** — the
   *Keep-Alive Foreground Service* switch is OFF on a fresh install.
-- `MainActivity.onCreate()` and the service itself never auto-start:
-  no `startForegroundService()` on launch, no BOOT receiver.
+- `MainActivity.onCreate()` and the service itself never auto-start on a
+  fresh install: no `startForegroundService()` on launch. The
+  `BootCompletedReceiver` imported from the PC v2 project may only *resume*
+  the service after reboot/update when the persisted in-app switch is ON;
+  with the switch OFF (the default) the receiver starts nothing.
 - Turning the switch ON always shows the explanation dialog first
   (`lib/widgets/foreground_service_dialog.dart`):
   > "Enabling the background service helps the app keep a persistent
@@ -68,7 +71,7 @@ Auto-detection (`Build.MANUFACTURER/BRAND`) pre-selects the tab and shows the
 - [x] First-launch Privacy Policy pop-up (Agree required, persisted)
 - [x] Privacy Policy updated with App Name `Power&volume` / `Power & Volume - Lock Screen & Sound Control` and Developer `NGUYEN MINH THANH`
 - [x] Simplified Chinese Privacy Policy added — *or* uncheck Chinese mainland *(done: translation added, market kept)*
-- [x] Foreground Service OFF by default; starts only after manual Enable
+- [x] Foreground Service OFF by default; starts only after manual Enable (boot/update resume is gated on that same opt-in)
 - [x] Device guide tabs for Huawei / Xiaomi / Samsung / OPPO / Vivo
 - [x] Privacy Policy URL is live on Vercel:
       `https://power-volume-privacy.vercel.app/privacy-policy.html`

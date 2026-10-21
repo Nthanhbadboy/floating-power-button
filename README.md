@@ -15,7 +15,7 @@ Floating / notification controls to **lock the screen instantly (0ms)** and
 | 1 | No Privacy Policy pop-up on first launch | Non-dismissible consent gate (`is_privacy_accepted`), Agree required — `lib/widgets/privacy_consent_gate.dart` |
 | 2 | No Chinese Privacy Policy (Chinese mainland selected) | Full Simplified Chinese policy online + in-app 中文 tab — `lib/data/privacy_policy_content.dart`, `docs/privacy-policy.html#zh` |
 | 3 | App/Developer name missing in Privacy Policy | Exact `Power & Volume - Lock Screen & Sound Control` / `NGUYEN MINH THANH` single-sourced from `lib/constants/app_info.dart` |
-| 4 | Foreground Service started without consent | Switch **OFF by default**, explanation dialog + explicit **Enable** before `startForegroundService()`; no launch/boot auto-start |
+| 4 | Foreground Service started without consent | Switch **OFF by default**, explanation dialog + explicit **Enable** before `startForegroundService()`; boot/update may only *resume* it afterwards if the user left it enabled |
 
 📚 **All documentation lives in [`docs/`](docs/README.md)** — AppGallery fix
 details, the 3-language Privacy Policy, the Vietnamese submission guide
@@ -47,6 +47,7 @@ lib/
 android/…/                         MainActivity, PowerAccessibilityService
                                    (GLOBAL_ACTION_LOCK_SCREEN),
                                    KeepAliveForegroundService (user-enabled),
+                                   BootCompletedReceiver + QS Tiles (PC v2),
                                    PowerDeviceAdminReceiver (force-lock only)
 docs/                              Privacy policy (Vercel source) + checklists
 ```

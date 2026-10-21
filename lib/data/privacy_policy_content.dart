@@ -58,7 +58,7 @@ The App does NOT collect, store, or transmit any personal data. It has no user a
 3. Permissions and why they are used
 • Accessibility Service: used only to perform the screen-lock action (GLOBAL_ACTION_LOCK_SCREEN) and to show the volume panel when you tap the App's buttons. The App never reads screen content, typed text, or accessibility events for any other purpose.
 • Device Administrator (optional): if you enable it, it is used only as a fallback to lock the screen and to prevent the system from killing the App. The App never wipes data or changes your password.
-• Foreground Service (optional, OFF by default): only starts after you read the explanation dialog and tap "Enable". It shows a persistent notification with Lock / Volume shortcuts so the system does not kill the accessibility service.
+• Foreground Service (optional, OFF by default): only starts after you read the explanation dialog and tap "Enable". If you leave it enabled, it may resume after a device reboot or app update; you can turn it off at any time in the app. It shows a persistent notification with Lock / Volume shortcuts so the system does not kill the accessibility service.
 • Ignore Battery Optimization (optional): helps the App keep working on devices with aggressive battery management (Huawei/EMUI, Xiaomi/MIUI, Samsung, OPPO, Vivo).
 • Notifications: used only for the persistent keep-alive notification described above.
 
@@ -90,7 +90,7 @@ ${AppInfo.shortAppName} ("Ứng dụng"), do ${AppInfo.developerName} phát tri�
 3. Quyền truy cập và mục đích sử dụng
 • Dịch vụ Trợ năng (Accessibility): chỉ dùng để khóa màn hình (GLOBAL_ACTION_LOCK_SCREEN) và hiển thị thanh âm lượng khi bạn chạm vào nút của Ứng dụng. Ứng dụng không bao giờ đọc nội dung màn hình, văn bản đã nhập hay sự kiện trợ năng cho mục đích khác.
 • Quản trị thiết bị / Device Administrator (tùy chọn): nếu bạn bật, chỉ dùng làm phương án dự phòng để khóa màn hình và tránh bị hệ thống đóng ứng dụng. Ứng dụng không bao giờ xóa dữ liệu hay đổi mật khẩu của bạn.
-• Dịch vụ chạy nền / Foreground Service (tùy chọn, mặc định TẮT): chỉ khởi chạy sau khi bạn đọc hộp thoại giải thích và bấm "Cho phép (Enable)". Dịch vụ hiển thị thông báo cố định với nút Khóa / Âm lượng để hệ thống không đóng dịch vụ trợ năng.
+• Dịch vụ chạy nền / Foreground Service (tùy chọn, mặc định TẮT): chỉ khởi chạy sau khi bạn đọc hộp thoại giải thích và bấm "Cho phép (Enable)". Nếu bạn để công tắc bật, dịch vụ có thể tự khôi phục sau khi máy khởi động lại hoặc ứng dụng được cập nhật; bạn có thể tắt bất cứ lúc nào trong ứng dụng. Nếu bạn để công tắc bật, dịch vụ có thể tự khôi phục sau khi máy khởi động lại hoặc ứng dụng được cập nhật; bạn có thể tắt bất cứ lúc nào trong ứng dụng. Dịch vụ hiển thị thông báo cố định với nút Khóa / Âm lượng để hệ thống không đóng dịch vụ trợ năng.
 • Bỏ qua Tối ưu pin (tùy chọn): giúp Ứng dụng hoạt động ổn định trên các máy quản lý pin gắt gao (Huawei/EMUI, Xiaomi/MIUI, Samsung, OPPO, Vivo).
 • Thông báo: chỉ dùng cho thông báo chạy nền cố định nêu trên.
 
@@ -126,7 +126,7 @@ ${AppInfo.shortAppName}（以下简称"本应用"）由 ${AppInfo.developerName}
 3. 权限及用途
 • 无障碍服务：仅用于执行锁屏操作（GLOBAL_ACTION_LOCK_SCREEN），以及在您点击本应用按钮时显示音量面板。本应用绝不会读取屏幕内容、输入文本或将无障碍事件用于其他任何目的。
 • 设备管理员（可选）：如您启用，仅作为锁屏的备用方式，并防止系统关闭本应用。本应用绝不会清除数据或更改您的密码。
-• 前台服务（可选，默认关闭）：仅在您阅读说明对话框并点击"启用（Enable）"后才会启动。该服务会显示一条带有"锁定 / 音量"快捷按钮的常驻通知，以防止系统关闭无障碍服务。
+• 前台服务（可选，默认关闭）：仅在您阅读说明对话框并点击"启用（Enable）"后才会启动。如果您保持开启状态，该服务可能会在设备重启或应用更新后恢复运行；您可以随时在应用中将其关闭。该服务会显示一条带有"锁定 / 音量"快捷按钮的常驻通知，以防止系统关闭无障碍服务。
 • 忽略电池优化（可选）：帮助本应用在电池管理较严格的设备（华为/EMUI、小米/MIUI、三星、OPPO、Vivo）上稳定运行。
 • 通知：仅用于上述常驻保活通知。
 
@@ -158,7 +158,7 @@ La Aplicación NO recopila, almacena ni transmite ningún dato personal. No tien
 3. Permisos y para qué se usan
 • Servicio de Accesibilidad: solo para bloquear la pantalla (GLOBAL_ACTION_LOCK_SCREEN) y mostrar el panel de volumen cuando tocas los botones de la Aplicación. La Aplicación nunca lee el contenido de la pantalla, el texto escrito ni los eventos de accesibilidad con ningún otro fin.
 • Administrador del dispositivo (opcional): solo como alternativa para bloquear la pantalla y evitar que el sistema cierre la Aplicación. La Aplicación nunca borra datos ni cambia tu contraseña.
-• Servicio en primer plano (opcional, DESACTIVADO por defecto): solo se inicia después de que leas el diálogo de explicación y toques "Activar". Muestra una notificación permanente con accesos de Bloqueo / Volumen para que el sistema no cierre el servicio de accesibilidad.
+• Servicio en primer plano (opcional, DESACTIVADO por defecto): solo se inicia después de que leas el diálogo de explicación y toques "Activar". Si lo dejas activado, puede reanudarse después de reiniciar el dispositivo o actualizar la aplicación; puedes desactivarlo en cualquier momento en la aplicación. Muestra una notificación permanente con accesos de Bloqueo / Volumen para que el sistema no cierre el servicio de accesibilidad.
 • Ignorar la optimización de batería (opcional): ayuda a que la Aplicación siga funcionando en dispositivos con gestión agresiva de la batería (Huawei/EMUI, Xiaomi/MIUI, Samsung, OPPO, Vivo).
 • Notificaciones: solo para la notificación permanente descrita arriba.
 

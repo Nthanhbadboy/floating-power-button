@@ -14,7 +14,7 @@ The App does NOT collect, store, or transmit any personal data. It has no user a
 ## 3. Permissions and why they are used
 - **Accessibility Service:** only to perform the screen-lock action (GLOBAL_ACTION_LOCK_SCREEN) and to show the volume panel when you tap the App's buttons. The App never reads screen content, typed text, or accessibility events for any other purpose.
 - **Device Administrator (optional):** only a fallback to lock the screen and to prevent the system from killing the App. The App never wipes data or changes your password.
-- **Foreground Service (optional, OFF by default):** only starts after you read the explanation dialog and tap "Enable". It shows a persistent notification with Lock / Volume shortcuts so the system does not kill the accessibility service.
+- **Foreground Service (optional, OFF by default):** only starts after you read the explanation dialog and tap "Enable". If you leave it enabled, it may resume after a device reboot or app update; you can turn it off at any time in the app. It shows a persistent notification with Lock / Volume shortcuts so the system does not kill the accessibility service.
 - **Ignore Battery Optimization (optional):** helps the App keep working on devices with aggressive battery management (Huawei/EMUI, Xiaomi/MIUI, Samsung, OPPO, Vivo).
 - **Notifications:** only for the persistent keep-alive notification described above.
 

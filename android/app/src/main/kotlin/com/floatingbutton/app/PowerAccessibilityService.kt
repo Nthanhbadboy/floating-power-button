@@ -1,6 +1,9 @@
 package com.floatingbutton.app
 
 import android.accessibilityservice.AccessibilityService
+import android.app.admin.DevicePolicyManager
+import android.content.ComponentName
+import android.content.Context
 import android.os.Build
 import android.view.accessibility.AccessibilityEvent
 
@@ -36,5 +39,37 @@ class PowerAccessibilityService : AccessibilityService() {
         @Volatile
         var instance: PowerAccessibilityService? = null
             private set
+
+        fun isServiceConnected(): Boolean = instance != null
+
+        /** Mirrors MainActivity's Device Admin check (used by QS tiles). */
+        fun isDeviceAdminActive(context: Context): Boolean = try {
+            val dpm = context.getSystemService(Context.DEVICE_POLICY_SERVICE)
+                as? DevicePolicyManager
+            dpm?.isAdminActive(
+                ComponentName(context, PowerDeviceAdminReceiver::class.java),
+            ) == true
+        } catch (e: Exception) {
+            false
+        }
+
+        /**
+         * Synchronous lock used by the Quick Settings tile and launcher
+         * shortcuts: Device Admin `lockNow()` first (instant), then the
+         * bound AccessibilityService global action.
+         */
+        fun lockScreen(context: Context): Boolean {
+            if (isDeviceAdminActive(context)) {
+                try {
+                    val dpm = context.getSystemService(Context.DEVICE_POLICY_SERVICE)
+                        as? DevicePolicyManager
+                    dpm?.lockNow()
+                    return true
+                } catch (e: Exception) {
+                    // Fall through to the accessibility service.
+                }
+            }
+            return instance?.lockScreen() == true
+        }
     }
 }

@@ -6,7 +6,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -24,6 +23,38 @@ class MainActivity : FlutterActivity() {
         // NOTE (review issue #4): deliberately NO startForegroundService()
         // here. The Keep-Alive service starts only from the method channel
         // below, after the user confirms the explanation dialog in Flutter.
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        handleQuickAction(intent)
+    }
+
+    /**
+     * Launcher long-press shortcuts (see res/xml/shortcuts.xml), imported
+     * from the PC v2 project: Lock runs the native lock immediately and
+     * closes the (transparent-task) activity; Volume shows the system
+     * volume panel. The action is consumed so a later onResume() does not
+     * re-trigger it. If locking is unavailable the app simply stays open
+     * so the user can enable Accessibility / Device Admin.
+     */
+    private fun handleQuickAction(intent: Intent?) {
+        when (intent?.action) {
+            ACTION_QUICK_LOCK -> {
+                intent.action = Intent.ACTION_MAIN
+                if (lockScreen()) finish()
+            }
+            ACTION_QUICK_VOLUME -> {
+                intent.action = Intent.ACTION_MAIN
+                VolumeController.showVolumeUI(this)
+                finish()
+            }
+        }
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -70,11 +101,12 @@ class MainActivity : FlutterActivity() {
                     }
                     "lockScreen" -> result.success(lockScreen())
                     "showVolumePanel" -> {
-                        showVolumePanel()
+                        VolumeController.showVolumeUI(this)
                         result.success(null)
                     }
                     "startForegroundService" -> result.success(startKeepAlive())
                     "stopForegroundService" -> {
+                        KeepAliveForegroundService.setUserEnabled(this, false)
                         stopService(Intent(this, KeepAliveForegroundService::class.java))
                         result.success(null)
                     }
@@ -88,24 +120,7 @@ class MainActivity : FlutterActivity() {
     }
 
     // ------------------------------------------------------------------ lock
-    private fun lockScreen(): Boolean {
-        PowerAccessibilityService.instance?.let { if (it.lockScreen()) return true }
-        if (isDeviceAdminActive()) {
-            val dpm = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
-            dpm.lockNow()
-            return true
-        }
-        return false
-    }
-
-    private fun showVolumePanel() {
-        val audio = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        audio.adjustStreamVolume(
-            AudioManager.STREAM_MUSIC,
-            AudioManager.ADJUST_SAME,
-            AudioManager.FLAG_SHOW_UI,
-        )
-    }
+    private fun lockScreen(): Boolean = PowerAccessibilityService.lockScreen(this)
 
     // ------------------------------------------------------- foreground svc
     private fun startKeepAlive(): Boolean = try {
@@ -123,6 +138,9 @@ class MainActivity : FlutterActivity() {
         } else {
             startService(intent)
         }
+        // Remember the explicit opt-in so BootCompletedReceiver may resume
+        // (never initially enable) the service after reboot/update.
+        KeepAliveForegroundService.setUserEnabled(this, true)
         true
     } catch (e: Exception) {
         false
@@ -296,5 +314,9 @@ class MainActivity : FlutterActivity() {
 
     companion object {
         private const val CHANNEL = "power_volume/native"
+
+        // Launcher shortcut actions (res/xml/shortcuts.xml), PC v2 parity.
+        const val ACTION_QUICK_LOCK = "com.floatingbutton.app.ACTION_QUICK_LOCK"
+        const val ACTION_QUICK_VOLUME = "com.floatingbutton.app.ACTION_QUICK_VOLUME"
     }
 }

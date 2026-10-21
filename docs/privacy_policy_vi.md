@@ -14,7 +14,7 @@ Power & Volume ("Ứng dụng"), do NGUYEN MINH THANH phát triển, giúp bạn
 ## 3. Quyền truy cập và mục đích sử dụng
 - **Dịch vụ Trợ năng (Accessibility):** chỉ dùng để khóa màn hình (GLOBAL_ACTION_LOCK_SCREEN) và hiển thị thanh âm lượng khi bạn chạm vào nút của Ứng dụng. Ứng dụng không bao giờ đọc nội dung màn hình, văn bản đã nhập hay sự kiện trợ năng cho mục đích khác.
 - **Quản trị thiết bị / Device Administrator (tùy chọn):** chỉ dùng làm phương án dự phòng để khóa màn hình và tránh bị hệ thống đóng ứng dụng. Ứng dụng không bao giờ xóa dữ liệu hay đổi mật khẩu của bạn.
-- **Dịch vụ chạy nền / Foreground Service (tùy chọn, mặc định TẮT):** chỉ khởi chạy sau khi bạn đọc hộp thoại giải thích và bấm "Cho phép (Enable)". Dịch vụ hiển thị thông báo cố định với nút Khóa / Âm lượng để hệ thống không đóng dịch vụ trợ năng.
+- **Dịch vụ chạy nền / Foreground Service (tùy chọn, mặc định TẮT):** chỉ khởi chạy sau khi bạn đọc hộp thoại giải thích và bấm "Cho phép (Enable)". Nếu bạn để công tắc bật, dịch vụ có thể tự khôi phục sau khi máy khởi động lại hoặc ứng dụng được cập nhật; bạn có thể tắt bất cứ lúc nào trong ứng dụng. Nếu bạn để công tắc bật, dịch vụ có thể tự khôi phục sau khi máy khởi động lại hoặc ứng dụng được cập nhật; bạn có thể tắt bất cứ lúc nào trong ứng dụng. Dịch vụ hiển thị thông báo cố định với nút Khóa / Âm lượng để hệ thống không đóng dịch vụ trợ năng.
 - **Bỏ qua Tối ưu pin (tùy chọn):** giúp Ứng dụng hoạt động ổn định trên các máy quản lý pin gắt gao (Huawei/EMUI, Xiaomi/MIUI, Samsung, OPPO, Vivo).
 - **Thông báo:** chỉ dùng cho thông báo chạy nền cố định nêu trên.
 

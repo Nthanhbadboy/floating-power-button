@@ -1,3 +1,16 @@
+## PC v2 native import
+- Imported the PC project's native features from
+  `Nthanhbadboy/floating_power_button_v2` branch `PC` (commit `32c0546`):
+  Quick Settings tiles (Lock Screen / Volume), launcher long-press
+  shortcuts, the shared `VolumeController`, and boot/update restore via
+  `BootCompletedReceiver`.
+- Boot restore is gated on the user's earlier in-app opt-in (persisted
+  natively, including the PC app's legacy preference); the Keep-Alive
+  service still defaults to OFF and never starts on a fresh install.
+- The service now starts with the explicit `specialUse` foreground type
+  on Android 14+. See `docs/PC_V2_IMPORT.md` for what was and was not
+  imported, and why the PC debug-signed release config was not.
+
 # Changelog
 
 ## Legacy PC debug-signing match

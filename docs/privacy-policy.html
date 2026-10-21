@@ -35,7 +35,7 @@
 <ul>
   <li><strong>Accessibility Service:</strong> only to perform the screen-lock action (GLOBAL_ACTION_LOCK_SCREEN) and to show the volume panel when you tap the App's buttons. The App never reads screen content, typed text, or accessibility events for any other purpose.</li>
   <li><strong>Device Administrator (optional):</strong> only a fallback to lock the screen and to prevent the system from killing the App. The App never wipes data or changes your password.</li>
-  <li><strong>Foreground Service (optional, OFF by default):</strong> only starts after you read the explanation dialog and tap "Enable". It shows a persistent notification with Lock / Volume shortcuts so the system does not kill the accessibility service.</li>
+  <li><strong>Foreground Service (optional, OFF by default):</strong> only starts after you read the explanation dialog and tap "Enable". If you leave it enabled, it may resume after a device reboot or app update; you can turn it off at any time in the app. It shows a persistent notification with Lock / Volume shortcuts so the system does not kill the accessibility service.</li>
   <li><strong>Ignore Battery Optimization (optional):</strong> helps the App keep working on devices with aggressive battery management (Huawei/EMUI, Xiaomi/MIUI, Samsung, OPPO, Vivo).</li>
   <li><strong>Notifications:</strong> only for the persistent keep-alive notification described above.</li>
 </ul>
@@ -68,7 +68,7 @@
 <ul>
   <li><strong>Dịch vụ Trợ năng:</strong> chỉ dùng để khóa màn hình và hiển thị thanh âm lượng. Ứng dụng không bao giờ đọc nội dung màn hình hay văn bản đã nhập.</li>
   <li><strong>Quản trị thiết bị (tùy chọn):</strong> chỉ là phương án dự phòng để khóa màn hình; không bao giờ xóa dữ liệu hay đổi mật khẩu.</li>
-  <li><strong>Dịch vụ chạy nền (tùy chọn, mặc định TẮT):</strong> chỉ khởi chạy sau khi bạn đọc hộp thoại giải thích và bấm "Cho phép (Enable)".</li>
+  <li><strong>Dịch vụ chạy nền (tùy chọn, mặc định TẮT):</strong> chỉ khởi chạy sau khi bạn đọc hộp thoại giải thích và bấm "Cho phép (Enable)". Nếu bạn để công tắc bật, dịch vụ có thể tự khôi phục sau khi máy khởi động lại hoặc ứng dụng được cập nhật; bạn có thể tắt bất cứ lúc nào trong ứng dụng.</li>
   <li><strong>Bỏ qua Tối ưu pin (tùy chọn)</strong> và <strong>Thông báo:</strong> chỉ dùng cho thông báo chạy nền cố định nêu trên.</li>
 </ul>
 <h2>4. Quảng cáo</h2>
@@ -98,7 +98,7 @@
 <ul>
   <li><strong>无障碍服务：</strong>仅用于执行锁屏操作以及显示音量面板，绝不会读取屏幕内容或输入文本。</li>
   <li><strong>设备管理员（可选）：</strong>仅作为锁屏的备用方式，绝不会清除数据或更改密码。</li>
-  <li><strong>前台服务（可选，默认关闭）：</strong>仅在您阅读说明对话框并点击"启用（Enable）"后才会启动，并显示一条常驻通知。</li>
+  <li><strong>前台服务（可选，默认关闭）：</strong>仅在您阅读说明对话框并点击"启用（Enable）"后才会启动。如果您保持开启状态，该服务可能会在设备重启或应用更新后恢复运行；您可以随时在应用中将其关闭，并显示一条常驻通知。</li>
   <li><strong>忽略电池优化（可选）</strong>与<strong>通知</strong>：仅用于上述常驻保活通知。</li>
 </ul>
 <h2>4. 广告</h2>

@@ -8,6 +8,10 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- Boot restore (PC v2 parity): BootCompletedReceiver only resumes
+         the Keep-Alive service when the user previously enabled it in the
+         app; it never starts anything on a fresh install. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- No INTERNET permission is requested by the app itself; ad SDKs add
          their own if/when they are integrated. -->
 
@@ -33,6 +37,10 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- Launcher long-press shortcuts (PC v2 parity). -->
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
         <!-- Accessibility: instant lock via GLOBAL_ACTION_LOCK_SCREEN.
@@ -81,6 +89,44 @@
         <receiver
             android:name="com.floatingbutton.app.NotificationActionReceiver"
             android:exported="false" />
+
+        <!-- Restores the user-enabled Keep-Alive service after reboot or
+             app update (PC v2 parity). Gated by the persisted in-app
+             opt-in; starts nothing on a fresh install. -->
+        <receiver
+            android:name="com.floatingbutton.app.BootCompletedReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Quick Settings Tile: Lock Screen (PC v2 parity). -->
+        <service
+            android:name="com.floatingbutton.app.LockTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_lock"
+            android:label="@string/tile_lock_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <!-- Quick Settings Tile: Volume panel (PC v2 parity). -->
+        <service
+            android:name="com.floatingbutton.app.VolumeTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_volume"
+            android:label="@string/tile_volume_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
 
         <!-- Google AdMob (fallback banner). TEST App ID — replace with the
              production AdMob App ID before release, together with

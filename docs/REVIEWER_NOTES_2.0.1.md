@@ -22,7 +22,11 @@
    shows an explanation dialog first; the service and its persistent
    "Power & Volume Active" notification (LOCK / VOLUME actions) start only
    after the user taps **Enable**. No service starts automatically on
-   install, first launch, or reboot.
+   install or first launch. If (and only if) the user leaves the switch
+   ON, the service may resume after a device reboot or an app update;
+   turning the switch OFF stops it and prevents any resume. The app also
+   adds two Quick Settings tiles (Lock Screen / Volume) and launcher
+   long-press shortcuts, imported from the previous PC build.
 
 ## How to test the main features
 - **Lock Screen:** enable Accessibility Service (row 1 in "Permissions &

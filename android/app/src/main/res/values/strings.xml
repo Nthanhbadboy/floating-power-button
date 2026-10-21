@@ -4,4 +4,14 @@
     <string name="accessibility_service_description">Locks your screen instantly and shows the volume panel when you tap the Power &amp; Volume buttons. It does not read your screen content or anything you type.</string>
     <string name="device_admin_label">Power &amp; Volume</string>
     <string name="device_admin_description">Optional fallback to lock the screen and prevent the system from closing Power &amp; Volume. It never wipes data or changes your password.</string>
+
+    <!-- Quick Settings Tiles (PC v2 parity) -->
+    <string name="tile_lock_label">Lock Screen</string>
+    <string name="tile_volume_label">Volume UI</string>
+
+    <!-- Launcher long-press shortcuts (PC v2 parity) -->
+    <string name="shortcut_lock_short">Lock</string>
+    <string name="shortcut_lock_long">Lock Screen</string>
+    <string name="shortcut_volume_short">Volume</string>
+    <string name="shortcut_volume_long">System Volume</string>
 </resources>
