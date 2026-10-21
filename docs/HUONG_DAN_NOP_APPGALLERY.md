@@ -44,14 +44,40 @@ Việc cần làm:
 3. **Notes for review:** copy toàn bộ nội dung file
    [`REVIEWER_NOTES_2.0.1.md`](REVIEWER_NOTES_2.0.1.md) dán vào.
 
-## Mục 3 — Build bản phát hành
+## Mục 3 — Build bản phát hành (ký thật bằng GitHub Actions)
+
+Key ký đã cấu hình qua **GitHub Secrets** (repo → Settings → Secrets and
+variables → Actions) — keystore/mật khẩu **không bao giờ commit**:
+
+| Secret | Nội dung |
+|---|---|
+| `ANDROID_KEYSTORE_BASE64` | File `.jks` mã hoá base64 (`base64 -w0 physics-draw-release.jks`) |
+| `ANDROID_KEYSTORE_PASSWORD` | Mật khẩu khoá (store password) |
+| `ANDROID_KEY_ALIAS` | `physicsdraw` |
+| `ANDROID_KEY_PASSWORD` | Mật khẩu riêng của key (key password) |
+
+Cách build:
+
+1. Vào tab **Actions → Build RELEASE (publish) → Run workflow**
+   (hoặc push tag `v*`). Workflow tự giải mã keystore tạm trên máy CI,
+   tạo `android/key.properties` tạm, build và **kiểm tra chứng thư không
+   phải Android Debug** rồi xoá key.
+2. Tải artifact **`PowerVolume-v2.0.1-RELEASE-signed`** (giữ 30 ngày)
+   gồm: `PowerVolume-v2.0.1-RELEASE.aab` (nộp AppGallery),
+   `PowerVolume-v2.0.1-RELEASE.apk` (cài kiểm tra), `SHA256SUMS.txt`.
+3. Nộp file **.aab** lên AppGallery Connect.
+
+> ⚠️ Từ các bản sau, **bắt buộc dùng đúng key này** để ký thì AppGallery
+> mới cho cập nhật đè lên bản đã phát hành. Mất keystore/mật khẩu sẽ phải
+> làm thủ tục cấp lại key với Huawei. Hãy sao lưu file `.jks` + mật khẩu
+> ở nơi an toàn (ngoài GitHub).
+
+Build thủ công ở máy (nếu cần):
 
 ```bash
-flutter pub get
-flutter test          # phải pass: pop-up privacy + switch mặc định OFF
-flutter analyze
-# Tạo android/key.properties + keystore thật (không commit keystore)
-flutter build appbundle --release   # hoặc flutter build apk --release
+flutter pub get && flutter test && flutter analyze
+# Tạo android/key.properties trỏ tới keystore thật (file này đã .gitignore)
+flutter build appbundle --release
 ```
 
 ## Mục 4 — Tự kiểm tra trên máy Huawei thật (cài mới hoàn toàn)

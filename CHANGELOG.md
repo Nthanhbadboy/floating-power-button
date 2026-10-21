@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased — signed release pipeline
+- **Release signing configured:** `build.gradle.kts` reads
+  `android/key.properties` (git-ignored); new **Build RELEASE (publish)**
+  workflow decodes the keystore from GitHub Secrets
+  (`ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`,
+  `ANDROID_KEY_ALIAS` = physicsdraw, `ANDROID_KEY_PASSWORD`), builds
+  signed **AAB + APK**, verifies the certificate is not Android Debug,
+  and uploads `PowerVolume-v2.0.1-RELEASE-signed` (30 days).
+
 ## Unreleased — regression fixes + ads integration
 - **i18n restored & extended:** header language selector now drives the
   whole UI in EN / VI / ZH / **ES** (dialogs, device guides, buttons,
