@@ -28,7 +28,7 @@ We do not sell, trade, or share your personal data with third parties, because w
 The App is a general utility and does not knowingly collect data from anyone, including children.
 
 ## 7. Changes
-We may update this policy; the latest version is always available at https://nthanhbadboy.github.io/floating-power-button/privacy-policy.html.
+We may update this policy; the latest version is always available at https://power-volume-privacy.vercel.app/privacy-policy.html.
 
 ## 8. Contact
 NGUYEN MINH THANH — alphaplusthanh82@gmail.com

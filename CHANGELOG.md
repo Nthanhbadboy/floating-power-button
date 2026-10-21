@@ -4,7 +4,7 @@
 - **Privacy:** first-launch, non-dismissible Privacy Policy consent pop-up
   (`is_privacy_accepted` in shared_preferences); app is unusable until Agree.
 - **Privacy:** Privacy Policy now in English, Vietnamese and **Simplified
-  Chinese** (in-app + https://nthanhbadboy.github.io/floating-power-button/privacy-policy.html),
+  Chinese** (in-app + https://power-volume-privacy.vercel.app/privacy-policy.html),
   with exact Developer Name `NGUYEN MINH THANH`, App Name
   `Power & Volume - Lock Screen & Sound Control` and contact email.
 - **Foreground Service:** OFF by default on fresh installs; explanation

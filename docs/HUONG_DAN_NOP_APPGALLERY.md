@@ -2,31 +2,35 @@
 
 > App: **Power & Volume - Lock Screen & Sound Control** · Developer: **NGUYEN MINH THANH** · Email: alphaplusthanh82@gmail.com
 
-## Mục 1 — Đưa Privacy Policy lên mạng bằng GitHub Pages
+## Mục 1 — Privacy Policy đã lên Vercel ✅ (URL chính thức)
 
-Trang chính sách đã có sẵn trong repo tại `docs/privacy-policy.html`
-(3 ngôn ngữ: EN / VI / 简体中文). Cần công khai nó theo các bước:
+URL dùng cho AppGallery Connect và trong app (đã khai báo tại
+`lib/constants/app_info.dart` → `privacyPolicyUrl`):
 
-1. **Merge Pull Request** của branch `arena/aa4d9a51-floating-power-button`
-   vào `main` trên GitHub (GitHub Pages chỉ phát hành ổn định từ `main`).
-2. Vào repo → **Settings → Pages**:
-   - *Build and deployment → Source:* **Deploy from a Branch**
-   - *Branch:* `main` · Folder: **`/docs`** → **Save**
-3. Đợi 1–2 phút, mở thử:
-   `https://nthanhbadboy.github.io/floating-power-button/privacy-policy.html`
-   Phải thấy đủ 3 mục English / Tiếng Việt / 简体中文 và dòng
-   *Developer Name: NGUYEN MINH THANH*.
+**https://power-volume-privacy.vercel.app/privacy-policy.html**
 
-> ⚠️ **Repo đang để Private.** Với tài khoản GitHub Free, Pages chỉ chạy
-> cho repo **Public** (Private cần GitHub Pro). Chọn 1 trong 3 cách:
-> - **Cách A (đơn giản nhất cho Privacy Policy):** tạo 1 repo public riêng
->   (ví dụ `power-volume-privacy`) chỉ chứa file `privacy-policy.html`,
->   bật Pages ở đó, dùng URL của repo đó. Code app vẫn để private.
-> - **Cách B:** chuyển repo này sang Public (chỉ khi chị thoải mái công khai code).
-> - **Cách C:** nâng GitHub Pro để giữ Private mà vẫn dùng được Pages.
+Việc cần làm:
+
+1. Mở URL trên kiểm tra trang tải được (không lỗi 404, không đòi đăng nhập).
+2. Dán URL này vào AppGallery Connect → **App information → Privacy Policy URL**
+   (chi tiết ở Mục 2).
+3. Không cần bật GitHub Pages nữa — trang đã host trên Vercel, repo app
+   vẫn để Private bình thường. File `docs/privacy-policy.html` trong repo
+   này là **nội dung chuẩn (canonical)** để đồng bộ lên Vercel.
+
+> ⚠️ **QUAN TRỌNG — phải đồng bộ nội dung trang Vercel trước khi nộp:**
+> Khi kiểm tra ngày 21/10/2026, trang Vercel hiện tại **chỉ có tiếng Anh**
+> và **chưa ghi** `Developer Name: NGUYEN MINH THANH`,
+> `App Name: Power & Volume - Lock Screen & Sound Control`,
+> `Contact Email: alphaplusthanh82@gmail.com`, cũng **chưa có bản
+> 简体中文**. Nếu nộp nguyên trạng, Huawei sẽ lại bắt lỗi #2 (thiếu tiếng
+> Trung) và #3 (thiếu tên App/Developer).
 >
-> Nếu chọn Cách A, nhớ sửa lại hằng số `privacyPolicyUrl` trong
-> `lib/constants/app_info.dart` cho khớp URL mới trước khi build.
+> Cách sửa: vào project Vercel `power-volume-privacy`, thay nội dung file
+> `privacy-policy.html` bằng đúng file
+> [`docs/privacy-policy.html`](privacy-policy.html) trong repo này (đã có
+> đủ EN / VI / 简体中文 + tên + email), rồi **Redeploy**. Mở lại URL kiểm
+> tra thấy đủ 3 ngôn ngữ và 3 dòng Developer/App/Email mới đạt.
 
 ## Mục 2 — Khai báo trên AppGallery Connect
 

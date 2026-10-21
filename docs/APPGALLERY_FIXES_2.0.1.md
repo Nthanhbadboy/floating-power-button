@@ -70,9 +70,15 @@ Auto-detection (`Build.MANUFACTURER/BRAND`) pre-selects the tab and shows the
 - [x] Simplified Chinese Privacy Policy added — *or* uncheck Chinese mainland *(done: translation added, market kept)*
 - [x] Foreground Service OFF by default; starts only after manual Enable
 - [x] Device guide tabs for Huawei / Xiaomi / Samsung / OPPO / Vivo
-- [ ] Enable GitHub Pages (repo Settings → Pages → branch `main`, folder `/docs`) and paste
-      `https://nthanhbadboy.github.io/floating-power-button/privacy-policy.html`
-      into AppGallery Connect → App information → Privacy Policy URL
+- [x] Privacy Policy URL is live on Vercel:
+      `https://power-volume-privacy.vercel.app/privacy-policy.html`
+      → paste it into AppGallery Connect → App information → Privacy Policy URL
+- [ ] **Sync the Vercel page content** with `docs/privacy-policy.html` in this
+      repo and redeploy (see warning in `HUONG_DAN_NOP_APPGALLERY.md` Mục 1):
+      as last checked (2026-10-21) the live page is English-only, names
+      neither Developer `NGUYEN MINH THANH` / App
+      `Power & Volume - Lock Screen & Sound Control` nor the contact email,
+      and has no 简体中文 section — issues #2/#3 would fail again as-is.
 - [ ] Add release signing (`android/key.properties` + keystore, not committed), then
       `flutter build appbundle --release` (AppGallery also accepts APK)
 - [ ] Re-test on a real Huawei device from a **fresh install**: pop-up first,

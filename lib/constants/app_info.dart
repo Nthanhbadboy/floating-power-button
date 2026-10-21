@@ -18,11 +18,13 @@ class AppInfo {
 
   static const String contactEmail = 'alphaplusthanh82@gmail.com';
 
-  /// Online Privacy Policy (GitHub Pages, served from /docs).
-  /// Enable: GitHub repo Settings -> Pages -> Deploy from branch -> /docs.
-  /// The page ships EN + VI + Simplified Chinese (review issue #2).
+  /// Online Privacy Policy — hosted on Vercel (live, verified 2026-10-21):
+  /// https://power-volume-privacy.vercel.app/privacy-policy.html
+  /// Keep the deployed page IN SYNC with the canonical 3-language content
+  /// in `docs/privacy-policy.html` (EN + VI + Simplified Chinese, review
+  /// issues #2/#3). The in-app "open online policy" button uses this URL.
   static const String privacyPolicyUrl =
-      'https://nthanhbadboy.github.io/floating-power-button/privacy-policy.html';
+      'https://power-volume-privacy.vercel.app/privacy-policy.html';
 
   static const String version = '2.0.1';
 }

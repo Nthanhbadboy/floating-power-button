@@ -5,7 +5,7 @@ Floating / notification controls to **lock the screen instantly (0ms)** and
 
 - **Developer:** NGUYEN MINH THANH
 - **Contact:** alphaplusthanh82@gmail.com
-- **Privacy Policy:** https://nthanhbadboy.github.io/floating-power-button/privacy-policy.html
+- **Privacy Policy:** https://power-volume-privacy.vercel.app/privacy-policy.html
   (English · Tiếng Việt · 简体中文） — source in [`docs/privacy-policy.html`](docs/privacy-policy.html)
 
 ## Version 2.0.1 — Huawei AppGallery fixes
@@ -47,7 +47,7 @@ android/…/                         MainActivity, PowerAccessibilityService
                                    (GLOBAL_ACTION_LOCK_SCREEN),
                                    KeepAliveForegroundService (user-enabled),
                                    PowerDeviceAdminReceiver (force-lock only)
-docs/                              GitHub Pages privacy policy + checklists
+docs/                              Privacy policy (Vercel source) + checklists
 ```
 
 ## Build & submit
@@ -67,9 +67,11 @@ flutter build appbundle --release   # or: flutter build apk --release
 ```
 
 Before uploading to AppGallery Connect:
-1. Enable GitHub Pages for this repo (Settings → Pages → `main` / `/docs`) so
-   the Privacy Policy URL above resolves, and paste that URL into
-   App information → Privacy Policy URL.
+1. The Privacy Policy URL above is already live on Vercel — paste it into
+   App information → Privacy Policy URL. IMPORTANT: redeploy the Vercel page
+   with the content of `docs/privacy-policy.html` first (the live page was
+   still English-only and missing the Developer/App names + Chinese text
+   when checked on 2026-10-21 — see docs/HUONG_DAN_NOP_APPGALLERY.md).
 2. Keep **Chinese mainland** selected only because the 简体中文 policy now
    exists — otherwise uncheck it under Version information →
    Country/Region for release.

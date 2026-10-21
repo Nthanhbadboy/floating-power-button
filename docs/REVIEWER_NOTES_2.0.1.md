@@ -3,7 +3,7 @@
 **App:** Power & Volume - Lock Screen & Sound Control
 **Developer:** NGUYEN MINH THANH
 **Contact:** alphaplusthanh82@gmail.com
-**Privacy Policy:** https://nthanhbadboy.github.io/floating-power-button/privacy-policy.html
+**Privacy Policy:** https://power-volume-privacy.vercel.app/privacy-policy.html
 (English / Vietnamese / Simplified Chinese 简体中文）
 
 ## What changed in response to the previous review

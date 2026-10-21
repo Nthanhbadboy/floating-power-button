@@ -32,7 +32,7 @@ Power & Volume（以下简称"本应用"）由 NGUYEN MINH THANH 开发，帮助
 本应用为通用工具类应用，不会有意收集包括儿童在内的任何人的数据。
 
 ## 7. 政策变更
-我们可能更新本政策，最新版本始终发布于 https://nthanhbadboy.github.io/floating-power-button/privacy-policy.html。
+我们可能更新本政策，最新版本始终发布于 https://power-volume-privacy.vercel.app/privacy-policy.html。
 
 ## 8. 联系我们
 NGUYEN MINH THANH — alphaplusthanh82@gmail.com

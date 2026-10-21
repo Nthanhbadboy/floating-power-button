@@ -28,7 +28,7 @@ Chúng tôi không bán, trao đổi hay chia sẻ dữ liệu cá nhân của b
 Ứng dụng là tiện ích phổ thông và không cố ý thu thập dữ liệu từ bất kỳ ai, kể cả trẻ em.
 
 ## 7. Thay đổi chính sách
-Chúng tôi có thể cập nhật chính sách này; phiên bản mới nhất luôn có tại https://nthanhbadboy.github.io/floating-power-button/privacy-policy.html.
+Chúng tôi có thể cập nhật chính sách này; phiên bản mới nhất luôn có tại https://power-volume-privacy.vercel.app/privacy-policy.html.
 
 ## 8. Liên hệ
 NGUYEN MINH THANH — alphaplusthanh82@gmail.com
