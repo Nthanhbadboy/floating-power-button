@@ -186,14 +186,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: const Color(0xFFDCEBFD),
-              borderRadius: BorderRadius.circular(12),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              'assets/icon/app_icon_114.png',
+              width: 44,
+              height: 44,
+              fit: BoxFit.cover,
             ),
-            child: const Icon(Icons.power_settings_new,
-                color: Color(0xFF1E88E5)),
           ),
           const SizedBox(width: 12),
           Expanded(

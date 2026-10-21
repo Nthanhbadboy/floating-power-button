@@ -74,7 +74,7 @@ class KeepAliveForegroundService : Service() {
             @Suppress("DEPRECATION") Notification.Builder(this)
         }
         return builder
-            .setSmallIcon(android.R.drawable.ic_lock_power_off)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle("Power & Volume Active")
             .setContentText("Tap for quick controls • Lock & Volume available here")
             .setContentIntent(openApp)
