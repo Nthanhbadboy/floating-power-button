@@ -1,4 +1,4 @@
-package com.nguyenminhthanh.power_volume
+package com.floatingbutton.app
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -34,7 +34,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        const val ACTION_LOCK = "com.nguyenminhthanh.power_volume.ACTION_LOCK"
-        const val ACTION_VOLUME = "com.nguyenminhthanh.power_volume.ACTION_VOLUME"
+        const val ACTION_LOCK = "com.floatingbutton.app.ACTION_LOCK"
+        const val ACTION_VOLUME = "com.floatingbutton.app.ACTION_VOLUME"
     }
 }

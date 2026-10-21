@@ -18,7 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.floatingbutton.app.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:taskAffinity=""
@@ -38,7 +38,7 @@
         <!-- Accessibility: instant lock via GLOBAL_ACTION_LOCK_SCREEN.
              It never reads screen content (see accessibility_service_config). -->
         <service
-            android:name=".PowerAccessibilityService"
+            android:name="com.floatingbutton.app.PowerAccessibilityService"
             android:exported="true"
             android:label="@string/accessibility_service_label"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
@@ -54,7 +54,7 @@
              specialUse subtype explains the persistent Lock/Volume
              notification to Google Play / AppGallery reviewers. -->
         <service
-            android:name=".KeepAliveForegroundService"
+            android:name="com.floatingbutton.app.KeepAliveForegroundService"
             android:exported="false"
             android:foregroundServiceType="specialUse">
             <property
@@ -64,7 +64,7 @@
 
         <!-- Optional fallback screen lock. Never wipes data. -->
         <receiver
-            android:name=".PowerDeviceAdminReceiver"
+            android:name="com.floatingbutton.app.PowerDeviceAdminReceiver"
             android:exported="true"
             android:label="@string/device_admin_label"
             android:description="@string/device_admin_description"
@@ -79,7 +79,7 @@
 
         <!-- LOCK / VOLUME actions on the persistent notification. -->
         <receiver
-            android:name=".NotificationActionReceiver"
+            android:name="com.floatingbutton.app.NotificationActionReceiver"
             android:exported="false" />
 
         <!-- Google AdMob (fallback banner). TEST App ID — replace with the

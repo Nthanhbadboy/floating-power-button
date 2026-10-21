@@ -22,8 +22,8 @@ if (hasReleaseSigning) {
 }
 
 android {
-    // Must match AppGallery Connect package name.
-    namespace = "com.nguyenminhthanh.power_volume"
+    // AppGallery Connect existing package name — do not change.
+    namespace = "com.floatingbutton.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -34,7 +34,7 @@ android {
     kotlinOptions { jvmTarget = JavaVersion.VERSION_17.toString() }
 
     defaultConfig {
-        applicationId = "com.nguyenminhthanh.power_volume"
+        applicationId = "com.floatingbutton.app"
         minSdk = 24
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

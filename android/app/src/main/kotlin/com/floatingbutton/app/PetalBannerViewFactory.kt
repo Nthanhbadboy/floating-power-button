@@ -1,4 +1,4 @@
-package com.nguyenminhthanh.power_volume
+package com.floatingbutton.app
 
 import android.content.Context
 import io.flutter.plugin.common.BinaryMessenger

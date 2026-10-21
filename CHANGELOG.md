@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.1 package-name correction
+- Changed Android `applicationId` and `namespace` from
+  `com.nguyenminhthanh.power_volume` to the existing AppGallery package
+  **`com.floatingbutton.app`**.
+- Moved all native Kotlin classes to `com.floatingbutton.app` and updated
+  manifest component names and notification action prefixes.
+- Release CI now extracts the built APK package name and fails unless it is
+  exactly `com.floatingbutton.app`.
+
 ## Unreleased — signed release pipeline
 - **Release signing configured:** `build.gradle.kts` reads
   `android/key.properties` (git-ignored); new **Build RELEASE (publish)**
