@@ -44,12 +44,19 @@ jobs:
           gradle-version: "8.4"
 
       - name: Generate Gradle wrapper if missing
-        working-directory: android
+        # Sinh wrapper trong thư mục trống: chạy trong android/ sẽ lỗi vì
+        # settings.gradle.kts đọc local.properties (chưa tồn tại lúc này).
         run: |
-          if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
-            gradle wrapper --gradle-version 8.4 --distribution-type all
+          if [ ! -f android/gradle/wrapper/gradle-wrapper.jar ]; then
+            TMPD="$(mktemp -d)"
+            (cd "$TMPD" && gradle wrapper --gradle-version 8.4 --distribution-type all)
+            mkdir -p android/gradle/wrapper
+            cp "$TMPD/gradle/wrapper/gradle-wrapper.jar" android/gradle/wrapper/
+            cp "$TMPD/gradle/wrapper/gradle-wrapper.properties" android/gradle/wrapper/
+            cp "$TMPD/gradlew" "$TMPD/gradlew.bat" android/
+            chmod +x android/gradlew
           fi
-          ls -la gradle/wrapper/
+          ls -la android/gradle/wrapper/
 
       - name: Flutter pub get
         run: flutter pub get
