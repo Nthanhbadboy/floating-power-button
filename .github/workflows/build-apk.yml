@@ -62,11 +62,11 @@ jobs:
       - name: Build DEBUG APK (cài để test nhanh)
         run: |
           set +e
-          flutter build apk --debug --verbose 2>&1 | tee build-debug.log
+          flutter build apk --debug 2>&1 | tee build-debug.log
           CODE=${PIPESTATUS[0]}
           { echo "## flutter build apk --debug (exit $CODE)"; echo '```text'; tail -n 150 build-debug.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
           if [ "$CODE" != "0" ]; then
-            grep -Ei "FAILURE|BUILD FAILED|error|exception|failed|warning: |e: " build-debug.log | tail -n 40 > build-errors.txt || true
+            grep -E "FAILURE:|BUILD FAILED|Execution failed|What went wrong|AAPT|error:|e: |Manifest merger|Could not|FAILED" build-debug.log | grep -v "Resource missing" | head -n 60 > build-errors.txt || true
             ESC=$(perl -pe 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g' build-errors.txt)
             echo "::error title=BuildDebugLog::$ESC"
           fi
