@@ -33,4 +33,9 @@ android {
     }
 }
 
+dependencies {
+    // Huawei Petal Ads (banner) — attempted first on HMS devices.
+    implementation("com.huawei.hms:ads-lite:13.4.69.300")
+}
+
 flutter { source = "../.." }

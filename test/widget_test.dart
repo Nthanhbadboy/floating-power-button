@@ -1,5 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:power_volume/data/manufacturer_guides.dart';
+import 'package:power_volume/data/privacy_policy_content.dart';
+import 'package:power_volume/l10n/app_strings.dart';
 import 'package:power_volume/main.dart';
+import 'package:power_volume/widgets/ads/ad_banner_host.dart';
 import 'package:power_volume/services/preferences_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -44,6 +48,44 @@ void main() {
     expect(find.text('LOCK SCREEN'), findsOneWidget);
     final prefs = await PreferencesService.load();
     expect(prefs.isPrivacyAccepted, isTrue);
+  });
+
+  testWidgets(
+    'ad banner is pinned in bottomNavigationBar and the Support Developer '
+    'card with Payoneer/VietQR sits above it in the scroll area',
+    (tester) async {
+      await tester.pumpWidget(await buildApp(privacyAccepted: true));
+      await tester.pumpAndSettle();
+
+      // Banner lives OUTSIDE the scroll view (Scaffold.bottomNavigationBar).
+      final scaffold = tester.widget<Scaffold>(find.byType(Scaffold).last);
+      expect(scaffold.bottomNavigationBar, isA<AdBannerHost>());
+      expect(find.byType(AdBannerHost), findsOneWidget);
+
+      // Support Developer card is reachable by scrolling, banner stays put.
+      await tester.scrollUntilVisible(
+          find.text('Donate via Payoneer'), 200);
+      expect(find.text('Support Developer (Optional)'), findsOneWidget);
+      expect(find.textContaining('buy the developer a coffee via Payoneer '
+          'or VietQR!'), findsOneWidget);
+      expect(find.text('Donate via VietQR'), findsOneWidget);
+      expect(find.byType(AdBannerHost), findsOneWidget);
+    },
+  );
+
+  test('Spanish (ES) localization resolves dialogs, guides and policy', () {
+    final es = AppStrings('es');
+    expect(es.t('agree'), 'Aceptar');
+    expect(es.t('fgDialogTitle'), contains('Keep-Alive'));
+    expect(es.t('donateViaPayoneer'), 'Donar vía Payoneer');
+    for (final guide in ManufacturerGuides.all) {
+      expect(guide.stepsFor('es'), isNotEmpty, reason: guide.id);
+      expect(guide.settingsButtonFor('es'), isNotEmpty, reason: guide.id);
+    }
+    expect(PrivacyPolicyContent.textFor('es'),
+        contains('NGUYEN MINH THANH'));
+    expect(PrivacyPolicyContent.textFor('zh'),
+        contains('NGUYEN MINH THANH'));
   });
 
   testWidgets(

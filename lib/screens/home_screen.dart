@@ -7,7 +7,9 @@ import '../models/manufacturer_guide.dart';
 import '../l10n/app_strings.dart';
 import '../services/native_bridge.dart';
 import '../services/preferences_service.dart';
+import '../widgets/ads/ad_banner_host.dart';
 import '../widgets/foreground_service_dialog.dart';
+import '../widgets/support_developer_card.dart';
 import 'privacy_policy_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -144,6 +146,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     final isProtected = _accessibilityActive || _keepAliveEnabled;
     return Scaffold(
       backgroundColor: const Color(0xFFF2F5FB),
+      // FIX (ad placement regression): the banner is pinned in
+      // bottomNavigationBar — permanently fixed at the very bottom of the
+      // screen, OUTSIDE the scrollable ListView. Content scrolls above it
+      // and can never push it down or cover it.
+      bottomNavigationBar: AdBannerHost(strings: _s),
       body: SafeArea(
         child: Column(
           children: [
@@ -166,9 +173,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     const SizedBox(height: 16),
                     _permissionsCard(),
                     const SizedBox(height: 16),
-                    _supportCard(),
-                    const SizedBox(height: 12),
-                    _adPlaceholder(),
+                    // Support Developer (Optional) — inside the scroll
+                    // area, directly above the pinned bottom ad banner.
+                    SupportDeveloperCard(strings: _s),
                     const SizedBox(height: 8),
                     _footerLinks(),
                   ],
@@ -603,62 +610,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             trailing,
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _supportCard() {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: const BorderSide(color: Color(0xFFFFE082)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: const Color(0xFFFFF8E1),
-                      borderRadius: BorderRadius.circular(12)),
-                  child: const Icon(Icons.coffee, color: Colors.orange),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(_s.t('supportTitle'),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16)),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(_s.t('supportBody')),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _adPlaceholder() {
-    // AdMob / Petal Ads banner mounts here in release builds. Kept as a
-    // clearly-labelled placeholder so no ad SDK runs before privacy consent.
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          Chip(label: const Text('Ad')),
-          const SizedBox(width: 8),
-          Expanded(child: Text(_s.t('adsNote'))),
-          const Icon(Icons.info_outline, size: 18),
-        ],
       ),
     );
   }

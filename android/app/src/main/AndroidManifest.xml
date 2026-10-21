@@ -82,6 +82,13 @@
             android:name=".NotificationActionReceiver"
             android:exported="false" />
 
+        <!-- Google AdMob (fallback banner). TEST App ID — replace with the
+             production AdMob App ID before release, together with
+             AppInfo.adMobBannerAdUnitId. -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
+
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

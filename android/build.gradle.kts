@@ -2,6 +2,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        // Huawei HMS / Petal Ads repository
+        maven { url = uri("https://developer.huawei.com/repo/") }
     }
 }
 

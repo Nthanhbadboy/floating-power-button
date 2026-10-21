@@ -92,4 +92,14 @@ class NativeBridge {
 
   static Future<bool> isForegroundServiceRunning() async =>
       await _invoke<bool>('isForegroundServiceRunning') ?? false;
+
+  // --- Ads: Huawei HMS / Petal Ads availability ------------------------------
+  /// True when this is a Huawei/Honor device with HMS Core present.
+  /// Petal Ads is attempted first on such devices (see AdBannerHost).
+  static Future<bool> isHmsAvailable() async =>
+      await _invoke<bool>('isHmsAvailable') ?? false;
+
+  /// True when the Huawei Petal Ads SDK (HwAds) is bundled and reachable.
+  static Future<bool> isPetalAdsAvailable() async =>
+      await _invoke<bool>('isPetalAdsAvailable') ?? false;
 }

@@ -6,18 +6,21 @@ class AppStrings {
 
   final String code;
 
-  static const List<String> supportedCodes = ['en', 'vi', 'zh'];
+  static const List<String> supportedCodes = ['en', 'vi', 'zh', 'es'];
 
   static String languageName(String code) => switch (code) {
         'vi' => 'VI',
         'zh' => '中文',
+        'es' => 'ES',
         _ => 'EN',
       };
 
   String get _pick => code;
 
-  String t(String key) =>
-      (_table[key]?[_pick] ?? _table[key]?['en'] ?? key)!;
+  String t(String key) {
+    if (code == 'es') return _es[key] ?? _table[key]?['en'] ?? key;
+    return _table[key]?[_pick] ?? _table[key]?['en'] ?? key;
+  }
 
   static const Map<String, Map<String, String>> _table = {
     'appTitle': {
@@ -236,10 +239,111 @@ class AppStrings {
       'vi': 'Đã tắt dịch vụ chạy nền Keep-Alive',
       'zh': '后台保活服务已停止',
     },
+    'donateViaPayoneer': {
+      'en': 'Donate via Payoneer',
+      'vi': 'Ủng hộ qua Payoneer',
+      'zh': '通过 Payoneer 支持',
+    },
+    'donateViaVietQr': {
+      'en': 'Donate via VietQR',
+      'vi': 'Ủng hộ qua VietQR',
+      'zh': '通过 VietQR 支持',
+    },
+    'payoneerDialogBody': {
+      'en': 'You can buy the developer a coffee via Payoneer using this email:',
+      'vi': 'Bạn có thể mời nhà phát triển một ly cà phê qua Payoneer bằng email:',
+      'zh': '您可以通过 Payoneer 使用以下邮箱请开发者喝杯咖啡：',
+    },
+    'vietQrDialogBody': {
+      'en': 'Scan the VietQR code in your banking app to support the developer:',
+      'vi': 'Quét mã VietQR trong ứng dụng ngân hàng để ủng hộ nhà phát triển:',
+      'zh': '在银行应用中扫描 VietQR 码以支持开发者：',
+    },
+    'copyEmail': {'en': 'Copy email', 'vi': 'Sao chép email', 'zh': '复制邮箱'},
+    'emailCopied': {
+      'en': 'Email copied to clipboard',
+      'vi': 'Đã sao chép email',
+      'zh': '邮箱已复制',
+    },
+    'close': {'en': 'Close', 'vi': 'Đóng', 'zh': '关闭'},
+    'adLoading': {
+      'en': 'Ad loading…',
+      'vi': 'Đang tải quảng cáo…',
+      'zh': '广告加载中…',
+    },
     'fgStartFailed': {
       'en': 'Could not start the foreground service on this device',
       'vi': 'Không khởi chạy được dịch vụ chạy nền trên thiết bị này',
       'zh': '无法在此设备上启动前台服务',
     },
+  };
+
+  /// Spanish (Español) — added so the header selector offers EN/VI/ZH/ES
+  /// and every dialog/guide/button resolves through this dictionary.
+  static const Map<String, String> _es = {
+    'appTitle': 'Power & Volume',
+    'welcome': 'Bienvenido a Power & Volume',
+    'privacyConsentBody':
+        'Para seguir usando la aplicación, lee y acepta nuestra Política de Privacidad y los Términos de Servicio.',
+    'privacyPolicy': 'Política de Privacidad',
+    'termsOfService': 'Términos de Servicio',
+    'agree': 'Aceptar',
+    'decline': 'Rechazar',
+    'fgDialogTitle': '¿Activar el servicio en primer plano Keep-Alive?',
+    'fgDialogBody':
+        'Activar el servicio en segundo plano ayuda a la aplicación a mantener una notificación permanente para controlar el volumen y bloquear la pantalla sin que el sistema la cierre. ¿Quieres activarlo?',
+    'enable': 'Activar',
+    'cancel': 'Cancelar',
+    'keepAliveTitle': 'Servicio en primer plano Keep-Alive',
+    'keepAliveSubtitle':
+        'Protege el servicio de accesibilidad para que no se cierre al deslizar la aplicación',
+    'lockScreen': 'BLOQUEAR PANTALLA',
+    'lockScreenSub': 'Bloqueo de pantalla instantáneo (0 ms)',
+    'volumePanel': 'PANEL DE VOLUMEN',
+    'volumePanelSub': 'Mostrar el control de volumen del sistema',
+    'protectedTitle': 'Protegido 24/7',
+    'notProtectedTitle': 'Aún no está totalmente protegido',
+    'protectedBody':
+        'Los servicios permanecen activos en {device}, inmunes al cierre por deslizamiento.',
+    'notProtectedBody':
+        'Activa abajo el Servicio de Accesibilidad (y opcionalmente el servicio Keep-Alive) para que {device} no cierre la aplicación.',
+    'permissionsTitle': 'Permisos y ajustes Keep-Alive',
+    'accessibility': 'Servicio de Accesibilidad',
+    'accessibilityActive': 'Activo (bloqueo por acción global)',
+    'accessibilityInactive': 'Inactivo (toca para activarlo)',
+    'deviceAdmin': 'Administrador del dispositivo',
+    'deviceAdminActive': 'Activo',
+    'deviceAdminInactive': 'Inactivo (recomendado para evitar cierres)',
+    'ignoreBattery': 'Ignorar optimización de batería',
+    'ignoreBatteryOff': 'Sin restricción del sistema',
+    'ignoreBatteryOn': 'Optimizado por el sistema (toca para desactivarlo)',
+    'guideCardTitle': 'Guía en segundo plano por dispositivo',
+    'guideCardBody':
+        'Configura Inicio de aplicaciones, Batería sin restricciones y Bloquear en Recientes para evitar que el sistema cierre los servicios en segundo plano.',
+    'viewInstructions': 'Ver instrucciones paso a paso',
+    'hideInstructions': 'Ocultar instrucciones',
+    'guideAutoDetect':
+        'Se detectó tu dispositivo automáticamente. También puedes elegir otro fabricante abajo:',
+    'yourDevice': 'Tu dispositivo',
+    'setupStepsFor': 'Pasos de configuración para {brand}:',
+    'supportTitle': 'Apoyar al desarrollador (opcional)',
+    'supportBody':
+        'This utility is 100% free. If you find it helpful, feel free to buy the developer a coffee via Payoneer or VietQR!',
+    'adsNote': 'Los anuncios mantienen esta utilidad 100% gratuita para todos',
+    'lockNeedsAccessibility':
+        'Bloquear requiere el Servicio de Accesibilidad (o el Administrador del dispositivo). Abriendo ajustes…',
+    'fgStarted': 'Servicio en primer plano Keep-Alive iniciado',
+    'fgStopped': 'Servicio en primer plano Keep-Alive detenido',
+    'fgStartFailed': 'No se pudo iniciar el servicio en primer plano en este dispositivo',
+    'donateViaPayoneer': 'Donar vía Payoneer',
+    'donateViaVietQr': 'Donar vía VietQR',
+    'payoneerDialogBody':
+        'Puedes invitar al desarrollador a un café vía Payoneer con este correo:',
+    'vietQrDialogBody':
+        'Escanea el código VietQR en tu aplicación bancaria para apoyar al desarrollador:',
+    'copyEmail': 'Copiar correo',
+    'emailCopied': 'Correo copiado al portapapeles',
+    'close': 'Cerrar',
+    'adLoading': 'Cargando anuncio…',
   };
 }

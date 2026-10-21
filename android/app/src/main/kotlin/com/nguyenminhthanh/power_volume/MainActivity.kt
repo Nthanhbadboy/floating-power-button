@@ -28,6 +28,12 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        // Huawei Petal Ads banner (platform view) — attempted first on HMS
+        // devices; Dart falls back to AdMob if it fails (AdBannerHost).
+        flutterEngine.platformViewsController.registry.registerViewFactory(
+            PetalBannerViewFactory.VIEW_TYPE,
+            PetalBannerViewFactory(flutterEngine.dartExecutor.binaryMessenger),
+        )
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
             .setMethodCallHandler { call, result ->
                 when (call.method) {
@@ -74,6 +80,8 @@ class MainActivity : FlutterActivity() {
                     }
                     "isForegroundServiceRunning" ->
                         result.success(KeepAliveForegroundService.isRunning)
+                    "isHmsAvailable" -> result.success(isHmsAvailable())
+                    "isPetalAdsAvailable" -> result.success(isPetalAdsAvailable())
                     else -> result.notImplemented()
                 }
             }
@@ -242,6 +250,26 @@ class MainActivity : FlutterActivity() {
             }
         }
         openAppDetails()
+    }
+
+    // ------------------------------------------------------------- ads / HMS
+    private fun isHmsAvailable(): Boolean {
+        val brand = (Build.MANUFACTURER + " " + Build.BRAND).lowercase()
+        val isHuaweiBrand = brand.contains("huawei") || brand.contains("honor")
+        if (!isHuaweiBrand) return false
+        return try {
+            packageManager.getPackageInfo("com.huawei.hwid", 0)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private fun isPetalAdsAvailable(): Boolean = try {
+        Class.forName("com.huawei.hms.ads.HwAds")
+        true
+    } catch (e: Exception) {
+        false
     }
 
     // ---------------------------------------------------------------- helpers

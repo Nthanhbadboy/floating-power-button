@@ -27,4 +27,25 @@ class AppInfo {
       'https://power-volume-privacy.vercel.app/privacy-policy.html';
 
   static const String version = '2.0.1';
+
+  // --- Donate (Support Developer card) --------------------------------------
+  /// Payoneer payments are addressed to the developer's Payoneer email.
+  static const String payoneerEmail = contactEmail;
+
+  /// Shown in the VietQR donate dialog. Replace with the real bank info /
+  /// QR payload before release if it changes.
+  static const String vietQrInfo =
+      'VietQR — NGUYEN MINH THANH\n(Bank QR code provided by the developer)';
+
+  // --- Ads (Petal Ads -> AdMob fallback) ------------------------------------
+  /// Huawei Petal Ads banner ad unit. This is Huawei's public TEST slot;
+  /// replace with the designated production Ad Unit ID from Petal Ads
+  /// Publisher Service before submitting to AppGallery.
+  static const String petalBannerAdUnitId = 'testw6vs28auh3';
+
+  /// Google AdMob banner ad unit. Google's public TEST banner unit;
+  /// replace with the production unit (and the APPLICATION_ID meta-data in
+  /// AndroidManifest.xml) before release.
+  static const String adMobBannerAdUnitId =
+      'ca-app-pub-3940256099942544/6300978111';
 }

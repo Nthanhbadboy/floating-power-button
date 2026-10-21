@@ -19,6 +19,7 @@ class ManufacturerGuides {
         'en': 'Open Huawei Battery Settings',
         'vi': 'Mở Cài đặt Pin Huawei',
         'zh': '打开华为电池设置',
+        'es': 'Abrir ajustes de batería de Huawei',
       },
       steps: {
         'en': [
@@ -42,6 +43,13 @@ class ManufacturerGuides {
           '手动开启全部 3 项：自动启动、关联启动、允许后台活动。',
           '打开最近任务界面，下滑应用卡片，直到出现锁定图标 🔒。',
         ],
+        'es': [
+          'Toca el botón de abajo para abrir los Ajustes de batería de Huawei (EMUI / HarmonyOS).',
+          'Selecciona «Inicio de aplicaciones» (App launch).',
+          'Busca «Power & Volume» y desactiva «Gestionar automáticamente».',
+          'Activa las 3 opciones manuales: Inicio automático, Inicio secundario y Ejecutar en segundo plano.',
+          'En Aplicaciones recientes: desliza la tarjeta de la aplicación hacia abajo hasta que aparezca el icono de candado 🔒.',
+        ],
       },
     ),
     // ---------------------------------------------------------------- Xiaomi
@@ -53,6 +61,7 @@ class ManufacturerGuides {
         'en': 'Open Xiaomi App Settings',
         'vi': 'Mở Cài đặt ứng dụng Xiaomi',
         'zh': '打开小米应用设置',
+        'es': 'Abrir ajustes de Xiaomi',
       },
       steps: {
         'en': [
@@ -73,6 +82,12 @@ class ManufacturerGuides {
           '进入"省电策略" → 改为"无限制"。',
           '打开最近任务 → 长按应用卡片 → 点击锁定图标 🔒。',
         ],
+        'es': [
+          'Mantén pulsado el icono de Power & Volume en la pantalla de inicio → Información de la aplicación.',
+          'Activa «Inicio automático» (Autostart).',
+          'Abre «Ahorro de batería» → cámbialo a «Sin restricciones».',
+          'Abre Aplicaciones recientes → mantén pulsada la tarjeta → toca el icono de candado 🔒.',
+        ],
       },
     ),
     // --------------------------------------------------------------- Samsung
@@ -84,6 +99,7 @@ class ManufacturerGuides {
         'en': 'Open Samsung App Settings',
         'vi': 'Mở Cài đặt ứng dụng Samsung',
         'zh': '打开三星应用设置',
+        'es': 'Abrir ajustes de Samsung',
       },
       steps: {
         'en': [
@@ -101,6 +117,11 @@ class ManufacturerGuides {
           '后台使用限制 → 将 Power & Volume 加入"从不休眠的应用"。',
           '应用信息 → 电池 → 选择"不受限制"。',
         ],
+        'es': [
+          'Ajustes → Cuidado del dispositivo → Batería.',
+          'Límites de uso en segundo plano → añade Power & Volume a «Aplicaciones que nunca duermen».',
+          'Información de la aplicación → Batería → selecciona «Sin restricción».',
+        ],
       },
     ),
     // ------------------------------------------------------------------ OPPO
@@ -112,6 +133,7 @@ class ManufacturerGuides {
         'en': 'Open OPPO App Settings',
         'vi': 'Mở Cài đặt ứng dụng OPPO',
         'zh': '打开 OPPO 应用设置',
+        'es': 'Abrir ajustes de OPPO',
       },
       steps: {
         'en': [
@@ -129,6 +151,11 @@ class ManufacturerGuides {
           '耗电管理 → 开启"允许后台运行"和"允许自启动"。',
           '打开最近任务 → 点击卡片上的 ⋮ 菜单 → 选择"锁定"。',
         ],
+        'es': [
+          'Ajustes → Gestión de aplicaciones → Power & Volume.',
+          'Uso de la batería → activa «Permitir actividad en segundo plano» y «Permitir inicio automático».',
+          'Abre Recientes → toca el menú ⋮ en la tarjeta de la aplicación → elige «Bloquear».',
+        ],
       },
     ),
     // ------------------------------------------------------------------ Vivo
@@ -140,6 +167,7 @@ class ManufacturerGuides {
         'en': 'Open Vivo App Settings',
         'vi': 'Mở Cài đặt ứng dụng Vivo',
         'zh': '打开 Vivo 应用设置',
+        'es': 'Abrir ajustes de Vivo',
       },
       steps: {
         'en': [
@@ -156,6 +184,11 @@ class ManufacturerGuides {
           '设置 → 电池 → "后台高耗电管理"。',
           '找到 Power & Volume → 设为"允许"。',
           '在自启动设置中，允许 Power & Volume 自动启动。',
+        ],
+        'es': [
+          'Ajustes → Batería → «Alto consumo de energía en segundo plano».',
+          'Busca Power & Volume → ajústalo a «Permitido».',
+          'En los ajustes de Inicio automático, permite que Power & Volume se inicie solo.',
         ],
       },
     ),

@@ -1,5 +1,26 @@
 # Changelog
 
+## Unreleased — regression fixes + ads integration
+- **i18n restored & extended:** header language selector now drives the
+  whole UI in EN / VI / ZH / **ES** (dialogs, device guides, buttons,
+  Privacy Policy) — all strings resolve through `AppStrings`, no hardcoded
+  stripping.
+- **Support Developer (Optional) restored** as `SupportDeveloperCard` with
+  working **Payoneer** (copy-email dialog) and **VietQR** donate actions,
+  keeping the exact "100% free … coffee via Payoneer or VietQR!" copy.
+- **Ad banner placement fixed:** banner moved OUT of the scrollable
+  ListView into `Scaffold.bottomNavigationBar` (`AdBannerHost`, fixed
+  56dp) — permanently pinned at the bottom; content scrolls above it.
+  The old in-list placeholder has been removed.
+- **Dual ads:** Huawei **Petal Ads** native banner first on HMS devices
+  (ads-lite SDK, platform view + load-failure events), **Google AdMob**
+  fallback (google_mobile_ads), house strip if neither fills. TEST ad
+  unit IDs — swap in `AppInfo` + manifest before release
+  (see docs/ADS_INTEGRATION.md).
+- Compliance retained: first-launch privacy pop-up, exact Developer/App
+  names in the policy, Foreground Service OFF until manually enabled.
+
+
 ## 2.0.1 (build 201) — AppGallery compliance release
 - **Privacy:** first-launch, non-dismissible Privacy Policy consent pop-up
   (`is_privacy_accepted` in shared_preferences); app is unusable until Agree.

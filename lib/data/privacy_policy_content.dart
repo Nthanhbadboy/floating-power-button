@@ -15,6 +15,8 @@ class PrivacyPolicyContent {
         return _vi;
       case 'zh':
         return _zh;
+      case 'es':
+        return _es;
       default:
         return _en;
     }
@@ -25,6 +27,12 @@ Developer Name: ${AppInfo.developerName}
 App Name: ${AppInfo.appName}
 Contact Email: ${AppInfo.contactEmail}
 Last updated: October 21, 2026''';
+
+  static const String _headerEs = '''
+Nombre del desarrollador: ${AppInfo.developerName}
+Nombre de la aplicación: ${AppInfo.appName}
+Correo de contacto: ${AppInfo.contactEmail}
+Última actualización: 21 de octubre de 2026''';
 
   static const String _headerVi = '''
 Tên nhà phát triển: ${AppInfo.developerName}
@@ -135,6 +143,38 @@ ${AppInfo.shortAppName}（以下简称"本应用"）由 ${AppInfo.developerName}
 我们可能更新本政策，最新版本始终发布于 ${AppInfo.privacyPolicyUrl}。
 
 8. 联系我们
+${AppInfo.developerName} — ${AppInfo.contactEmail}
+''';
+
+  static const String _es = '''
+$_headerEs
+
+1. Introducción
+${AppInfo.shortAppName} ("la Aplicación"), desarrollada por ${AppInfo.developerName}, te ayuda a bloquear la pantalla al instante y abrir el panel de volumen del sistema sin pulsar botones físicos.
+
+2. Datos que recopilamos
+La Aplicación NO recopila, almacena ni transmite ningún dato personal. No tiene cuentas de usuario, ni SDK de análisis, y no te rastrea. Todos los ajustes (idioma, preferencia de actividad en segundo plano, consentimiento de privacidad) se guardan solo en tu dispositivo.
+
+3. Permisos y para qué se usan
+• Servicio de Accesibilidad: solo para bloquear la pantalla (GLOBAL_ACTION_LOCK_SCREEN) y mostrar el panel de volumen cuando tocas los botones de la Aplicación. La Aplicación nunca lee el contenido de la pantalla, el texto escrito ni los eventos de accesibilidad con ningún otro fin.
+• Administrador del dispositivo (opcional): solo como alternativa para bloquear la pantalla y evitar que el sistema cierre la Aplicación. La Aplicación nunca borra datos ni cambia tu contraseña.
+• Servicio en primer plano (opcional, DESACTIVADO por defecto): solo se inicia después de que leas el diálogo de explicación y toques "Activar". Muestra una notificación permanente con accesos de Bloqueo / Volumen para que el sistema no cierre el servicio de accesibilidad.
+• Ignorar la optimización de batería (opcional): ayuda a que la Aplicación siga funcionando en dispositivos con gestión agresiva de la batería (Huawei/EMUI, Xiaomi/MIUI, Samsung, OPPO, Vivo).
+• Notificaciones: solo para la notificación permanente descrita arriba.
+
+4. Publicidad
+La Aplicación puede mostrar anuncios tipo banner (Google AdMob / Huawei Petal Ads). Los proveedores de anuncios pueden procesar los identificadores publicitarios del dispositivo según sus propias políticas de privacidad. La Aplicación en sí no comparte datos personales con ellos.
+
+5. Compartir datos
+No vendemos, intercambiamos ni compartimos tus datos personales con terceros, porque no recopilamos ninguno.
+
+6. Menores
+La Aplicación es una utilidad general y no recopila conscientemente datos de nadie, incluidos los menores.
+
+7. Cambios
+Podemos actualizar esta política; la versión más reciente está siempre en ${AppInfo.privacyPolicyUrl}.
+
+8. Contacto
 ${AppInfo.developerName} — ${AppInfo.contactEmail}
 ''';
 }

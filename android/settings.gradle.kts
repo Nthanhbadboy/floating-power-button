@@ -10,6 +10,8 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        // Huawei HMS / Petal Ads repository
+        maven { url = uri("https://developer.huawei.com/repo/") }
     }
 }
 
