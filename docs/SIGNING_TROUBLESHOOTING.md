@@ -108,3 +108,49 @@ Có hai tình huống trong AppGallery Connect:
 Trong cả hai trường hợp, chỉ tải file
 `PowerVolume-v2.0.1-com.floatingbutton.app-APPGALLERY-SIGNED.apk`
 lên AppGallery; **không tải AAB**.
+## Trường hợp bản PC 2.0.0 ký bằng Android debug key
+
+Thông tin kiểm tra cho thấy APK Power & Volume 2.0.0 đã tải lên ngày 19/10
+được ghi nhận là **debug signing**, chưa có release keystore riêng. Nếu bản đó
+được build trên PC với debug key mặc định, file key nằm tại:
+
+```text
+C:\Users\DELL\.android\debug.keystore
+```
+
+Lưu ý:
+
+- Mỗi PC có một `debug.keystore` khác nhau. Key debug do GitHub Actions/Android
+  SDK tự tạo trên máy khác sẽ cho SHA-256 khác và vẫn bị AppGallery báo sai.
+- Chỉ biết SHA-256, alias hay mật khẩu thì **không ký lại được**; bắt buộc phải
+  có đúng file `debug.keystore` trên PC Dell đã build bản 19/10.
+- Không gửi file keystore hoặc mật khẩu qua chat, commit Git, hoặc Pull Request.
+  Hãy cập nhật trực tiếp trong GitHub → **Settings → Secrets and variables →
+  Actions**:
+
+  | Secret | Cần thay bằng |
+  |---|---|
+  | `ANDROID_KEYSTORE_BASE64` | Nội dung Base64 một dòng của đúng file `debug.keystore` trên PC |
+  | `ANDROID_KEYSTORE_PASSWORD` | Store password của debug keystore đó |
+  | `ANDROID_KEY_ALIAS` | Alias của debug key đó |
+  | `ANDROID_KEY_PASSWORD` | Key password của debug key đó |
+
+- Trên Windows PowerShell, có thể tạo file text chứa Base64 (file này cũng là
+  bí mật, không chia sẻ/commit):
+
+  ```powershell
+  [Convert]::ToBase64String([IO.File]::ReadAllBytes("$env:USERPROFILE\.android\debug.keystore")) |
+    Set-Content "$env:USERPROFILE\Desktop\debug-keystore-base64.txt"
+  ```
+
+- Mở file text, copy toàn bộ nội dung và dán vào secret
+  `ANDROID_KEYSTORE_BASE64`. Sau khi thay đủ 4 secret, báo lại
+  **“đã thay debug key PC”** để build lại. Bản build mới phải có
+  **Signer #1 certificate SHA-256 digest** trong `CERTIFICATE.txt` giống hệt
+  chứng thư debug key trên PC/APK 2.0.0.
+
+Cảnh báo lâu dài: debug key chỉ nên dùng để khớp với bản legacy 2.0.0 khi
+AppGallery yêu cầu giữ nguyên signature. Hãy sao lưu file này như release key
+nếu nó trở thành chữ ký chính thức của app. Nếu AppGallery không chấp nhận
+debug signing cho bản phát hành chính thức, hãy dùng release keystore thật và
+đi theo quy trình xin đổi signature ở phần trước, thay vì tiếp tục dùng debug key.

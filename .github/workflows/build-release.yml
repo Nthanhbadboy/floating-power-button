@@ -130,8 +130,7 @@ jobs:
           echo "Using $APKSIGNER"
           "$APKSIGNER" verify --print-certs dist/PowerVolume-v2.0.1-com.floatingbutton.app-APPGALLERY-SIGNED.apk | tee cert.txt
           if grep -qi "CN=Android Debug" cert.txt; then
-            echo "::error::APK is debug-signed — release signing was not applied. Do NOT publish this build."
-            exit 1
+            echo "::warning::APK is signed with the Android Debug certificate. This is only acceptable as a deliberate legacy match for the PC-built 2.0.0 package; verify its SHA-256 against that package before uploading."
           fi
           grep -i "SHA-256" cert.txt || true
           cp cert.txt dist/CERTIFICATE.txt

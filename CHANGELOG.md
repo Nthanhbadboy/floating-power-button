@@ -1,5 +1,13 @@
 # Changelog
 
+## Legacy PC debug-signing match
+- The uploaded Power & Volume 2.0.0 package was identified as Android
+  debug-signed, with no separate release keystore. The release workflow now
+  permits a deliberate debug-certificate build (with a prominent warning)
+  only so it can match that legacy package when the exact PC
+  `debug.keystore` is supplied through GitHub Secrets; the certificate
+  SHA-256 must still be compared before uploading.
+
 ## Signing correction for AppGallery re-upload
 - Split release outputs so AppGallery receives only the clearly named,
   signed **APK** (`...-APPGALLERY-SIGNED.apk`); the AAB is a separate
